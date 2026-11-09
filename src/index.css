@@ -374,6 +374,15 @@ input, select, textarea {
     padding: 1rem !important;
   }
 
+  .report-letterhead-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-bottom: 3px double #0f172a !important;
+    page-break-after: avoid;
+    margin-bottom: 1.5rem !important;
+  }
+
   img {
     max-width: 100% !important;
     -webkit-print-color-adjust: exact !important;

@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 import { QUALITY_PILLARS, TEACHING_FILE_ITEMS } from '../data/auditRubrics';
 import { calculateAuditMetrics, generateExecutiveSummary } from '../services/auditEngine';
-import klustLogo from '../assets/klust-logo.jpg';
 
 export default function DashboardOverview({
   course,
@@ -129,20 +128,6 @@ export default function DashboardOverview({
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.6rem' }}>
-            <div style={{
-              background: '#ffffff',
-              padding: '0.35rem 0.65rem',
-              borderRadius: 'var(--radius-md)',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
-              display: 'inline-flex',
-              alignItems: 'center'
-            }}>
-              <img
-                src={klustLogo}
-                alt="KLUST"
-                style={{ height: '30px', width: 'auto', objectFit: 'contain' }}
-              />
-            </div>
 
             <button
               type="button"

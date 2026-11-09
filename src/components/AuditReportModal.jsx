@@ -59,36 +59,38 @@ export default function AuditReportModal({ isOpen, onClose, course }) {
         {/* Formal Report Content - Formatted for both screen and print */}
         <div className="modal-body" style={{ padding: '2rem' }}>
           
-          {/* Institutional Header with Official KLUST Logo */}
-          <div style={{
+          {/* Official Institutional Header with Official KLUST Landscape Logo */}
+          <div className="report-letterhead-header" style={{
             borderBottom: '3px double #0f172a',
             paddingBottom: '1.25rem',
             marginBottom: '1.75rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            flexWrap: 'wrap',
             gap: '1.5rem'
           }}>
-            <img
-              src={klustLogo}
-              alt="Kuala Lumpur University of Science and Technology"
-              style={{
-                height: '58px',
-                width: 'auto',
-                maxWidth: '320px',
-                objectFit: 'contain'
-              }}
-            />
-            <div style={{ textAlign: 'right', flex: 1, minWidth: '280px' }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--primary)', textTransform: 'uppercase' }}>
-                INTERNAL QUALITY ASSURANCE & ACCREDITATION AUDIT
+            <div style={{ flexShrink: 0 }}>
+              <img
+                src={klustLogo}
+                alt="Kuala Lumpur University of Science and Technology"
+                style={{
+                  height: '62px',
+                  width: 'auto',
+                  maxWidth: '300px',
+                  objectFit: 'contain',
+                  display: 'block'
+                }}
+              />
+            </div>
+            <div style={{ textAlign: 'right', flex: 1 }}>
+              <div style={{ fontSize: '0.76rem', fontWeight: 800, letterSpacing: '0.14em', color: 'var(--primary)', textTransform: 'uppercase' }}>
+                CENTRE FOR ACADEMIC QUALITY ASSURANCE & ACCREDITATION
               </div>
-              <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', margin: '0.25rem 0 0.15rem 0' }}>
+              <h1 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#0f172a', margin: '0.25rem 0 0.15rem 0', letterSpacing: '-0.01em' }}>
                 TEACHING & LEARNING QUALITY AUDIT REPORT
               </h1>
-              <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-                Outcome-Based Education (OBE) Course Portfolio Assessment • Session 2026/2027
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                Outcome-Based Education (OBE) Course Teaching Portfolio Assessment • Session 2026/2027
               </div>
             </div>
           </div>
