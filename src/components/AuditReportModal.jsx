@@ -103,8 +103,8 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
               />
             </div>
             <div style={{ textAlign: 'right', flex: 1 }}>
-              <div style={{ fontSize: '0.76rem', fontWeight: 800, letterSpacing: '0.14em', color: 'var(--primary)', textTransform: 'uppercase' }}>
-                CENTRE FOR ACADEMIC QUALITY ASSURANCE & ACCREDITATION
+              <div style={{ fontSize: '0.82rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--primary)', textTransform: 'uppercase' }}>
+                FABE+ADQAD
               </div>
               <h1 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#0f172a', margin: '0.25rem 0 0.15rem 0', letterSpacing: '-0.01em' }}>
                 {isAuditor ? 'TEACHING & LEARNING QUALITY AUDIT REPORT' : 'TEACHING & LEARNING PRE-AUDIT READINESS REPORT'}

@@ -90,7 +90,7 @@ export default function Navbar({
                 letterSpacing: '0.01em',
                 marginTop: '0.15rem'
               }}>
-                Centre for Academic Quality Assurance • Outcome-Based Education (OBE) Audit Portal
+                FABE+ADQAD • Outcome-Based Education (OBE) Audit Portal
               </div>
             </div>
           </div>
