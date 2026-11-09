@@ -15,6 +15,7 @@ import {
   HelpCircle,
   ArrowRight,
   ShieldAlert,
+  ShieldCheck,
   Sparkles,
   Building,
   GraduationCap
