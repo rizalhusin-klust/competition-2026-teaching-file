@@ -65,7 +65,7 @@ export default function DashboardOverview({
           pointerEvents: 'none'
         }} />
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.25rem', position: 'relative' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem', position: 'relative' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem', flexWrap: 'wrap' }}>
               <span className="badge" style={{ background: 'rgba(255,255,255,0.15)', color: '#93c5fd', border: '1px solid rgba(255,255,255,0.2)' }}>
@@ -74,27 +74,6 @@ export default function DashboardOverview({
               <span className="badge" style={{ background: 'rgba(255,255,255,0.1)', color: '#e2e8f0', border: '1px solid rgba(255,255,255,0.15)' }}>
                 {course.creditHours} Credits ({(course.creditHours || 3) * 40}h SLT)
               </span>
-              <button
-                type="button"
-                onClick={onOpenEditCourse}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.3rem',
-                  background: 'rgba(255,255,255,0.12)',
-                  color: '#ffffff',
-                  border: '1px solid rgba(255,255,255,0.25)',
-                  borderRadius: '999px',
-                  padding: '0.2rem 0.6rem',
-                  fontSize: '0.74rem',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-                title="Edit Course, Lecturer, and Auditor names"
-              >
-                <User size={12} style={{ color: '#60a5fa' }} />
-                <span>Change Names / Settings</span>
-              </button>
             </div>
 
             <h1 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#ffffff' }}>
@@ -104,62 +83,39 @@ export default function DashboardOverview({
               {course.program}
             </p>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap', fontSize: '0.85rem', color: '#cbd5e1' }}>
-              <span 
-                onClick={onOpenEditCourse}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.08)', padding: '0.25rem 0.6rem', borderRadius: 'var(--radius-sm)' }}
-                title="Click to edit Lecturer Name"
-              >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem', marginTop: '1rem', flexWrap: 'wrap', fontSize: '0.85rem', color: '#cbd5e1' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
                 <User size={15} style={{ color: '#60a5fa' }} />
-                <strong>Lecturer:</strong> <span style={{ textDecoration: 'underline dotted', textUnderlineOffset: '3px' }}>{course.lecturer}</span>
+                <span style={{ color: '#94a3b8' }}>Lecturer:</span> <strong style={{ color: '#ffffff' }}>{course.lecturer}</strong>
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <Calendar size={15} style={{ color: '#60a5fa' }} />
-                <strong>Audit Date:</strong> {course.auditDate || '2026-11-09'}
-              </span>
-              <span 
-                onClick={onOpenEditCourse}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.08)', padding: '0.25rem 0.6rem', borderRadius: 'var(--radius-sm)' }}
-                title="Click to edit Auditor Name"
-              >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
                 <Award size={15} style={{ color: '#fcd34d' }} />
-                <strong>Auditor:</strong> <span style={{ textDecoration: 'underline dotted', textUnderlineOffset: '3px' }}>{course.auditorName || 'Internal Quality Auditor'}</span>
+                <span style={{ color: '#94a3b8' }}>Auditor:</span> <strong style={{ color: '#ffffff' }}>{course.auditorName || 'Internal Quality Auditor'}</strong>
               </span>
-              <span 
-                onClick={onOpenEditCourse}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.08)', padding: '0.25rem 0.6rem', borderRadius: 'var(--radius-sm)' }}
-                title="Click to edit Head of Department Name"
-              >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
                 <Building size={15} style={{ color: '#c084fc' }} />
-                <strong>HOD:</strong> <span style={{ textDecoration: 'underline dotted', textUnderlineOffset: '3px' }}>{course.headOfDepartment || 'Prof. Ar. Dr. Norwina Mohd Nawawi'}</span>
+                <span style={{ color: '#94a3b8' }}>HOD:</span> <strong style={{ color: '#ffffff' }}>{course.headOfDepartment || 'Prof. Ar. Dr. Norwina Mohd Nawawi'}</strong>
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Calendar size={15} style={{ color: '#94a3b8' }} />
+                <span style={{ color: '#94a3b8' }}>Date:</span> <strong style={{ color: '#ffffff' }}>{course.auditDate || '2026-11-09'}</strong>
               </span>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.6rem' }}>
-            <button
-              type="button"
-              className="btn btn-primary btn-sm"
-              onClick={() => onOpenAIReview && onOpenAIReview(course.folders?.[0] || { id: '01', title: 'Course Information & Approved Syllabus' })}
-              style={{
-                background: isAuditor ? 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)' : 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-                borderColor: 'transparent',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
-              }}
-            >
-              <Sparkles size={14} />
-              <span>{isAuditor ? '🤖 AI Quality Scrutiny' : '🤖 AI Pre-Audit Health Check'}</span>
-            </button>
-
+          {/* Clean Primary Actions (No duplicate Edit buttons) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button
               type="button"
               className="btn btn-secondary btn-sm"
               onClick={onOpenEditCourse}
-              style={{ background: 'rgba(255,255,255,0.18)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.3)' }}
+              style={{ background: 'rgba(255,255,255,0.12)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.25)' }}
+              title="Edit Course details, assigned Lecturer, Auditor, and HOD"
             >
               <User size={14} />
-              <span>Edit Auditor & Lecturer</span>
+              <span>Edit Details</span>
             </button>
+
             {course.driveFolderUrl && (
               <a
                 href={course.driveFolderUrl}
@@ -167,88 +123,165 @@ export default function DashboardOverview({
                 rel="noreferrer"
                 className="btn btn-secondary btn-sm"
                 style={{ background: 'rgba(255,255,255,0.12)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.25)' }}
+                title="Open Course Repository in Google Drive"
               >
                 <ExternalLink size={14} />
-                <span>Open in Google Drive</span>
+                <span>Google Drive</span>
               </a>
             )}
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              onClick={onOpenReport}
-              style={{ background: 'rgba(255,255,255,0.15)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.25)' }}
-            >
-              <FileText size={14} />
-              <span>{isAuditor ? 'Generate Audit Report' : 'Preview Self-Check Report'}</span>
-            </button>
 
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
-              onClick={onOpenExportHtml}
-              style={{ background: 'rgba(59,130,246,0.25)', color: '#ffffff', borderColor: 'rgba(147,197,253,0.4)', fontWeight: 700 }}
-              title="Save all 13 folders, links, and audit report in a single standalone .html file"
+              className="btn btn-primary btn-sm"
+              onClick={() => onOpenAIReview && onOpenAIReview(course.folders?.[0] || { id: '01', title: 'Course Information & Approved Syllabus' })}
+              style={{
+                background: isAuditor ? 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)' : 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                borderColor: 'transparent',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                fontWeight: 700
+              }}
             >
-              <FileCode size={14} />
-              <span>Save Single HTML</span>
+              <Sparkles size={14} />
+              <span>{isAuditor ? 'AI Quality Scrutiny' : 'AI Pre-Audit Check'}</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Role Context & Guidance Banner */}
-      <div style={{
-        background: isAuditor ? 'linear-gradient(90deg, #eff6ff 0%, #f8fafc 100%)' : 'linear-gradient(90deg, #ecfdf5 0%, #f8fafc 100%)',
-        border: `1px solid ${isAuditor ? '#bfdbfe' : '#a7f3d0'}`,
-        borderLeft: `5px solid ${isAuditor ? '#2563eb' : '#059669'}`,
-        borderRadius: 'var(--radius-md)',
-        padding: '1rem 1.35rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '1rem'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem' }}>
-          <div style={{
-            width: '38px',
-            height: '38px',
-            borderRadius: '50%',
-            background: isAuditor ? '#dbeafe' : '#d1fae5',
-            color: isAuditor ? '#1e40af' : '#065f46',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0
-          }}>
-            {isAuditor ? <ShieldCheck size={20} /> : <GraduationCap size={20} />}
+      {/* Recommended 4-Step Pedagogical Audit Process Bar */}
+      <div className="card" style={{ padding: '1rem 1.25rem', background: '#ffffff', border: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--primary)' }}>
+              Recommended Audit Workflow
+            </span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              • Complete each phase to achieve accreditation compliance
+            </span>
           </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontSize: '0.92rem', fontWeight: 800, color: isAuditor ? '#1e3a8a' : '#065f46' }}>
-                {isAuditor ? 'Active Perspective: Internal Quality Auditor' : 'Active Perspective: Course Lecturer Self-Check'}
-              </span>
-              <span className={`badge ${isAuditor ? 'badge-primary' : 'badge-success'}`} style={{ fontSize: '0.66rem' }}>
-                {isAuditor ? 'Compliance & Scrutiny' : 'Pre-Audit Coaching'}
-              </span>
-            </div>
-            <p style={{ fontSize: '0.8rem', color: '#475569', margin: '0.2rem 0 0 0' }}>
-              {isAuditor
-                ? 'Reviewing teaching file for accreditation rigor. Verify constructive alignment, evaluate marking objectivity, and flag non-conformance risks.'
-                : 'Conducting pre-submission self-assessment. Identify missing files, refine rubric descriptors, and verify continuous quality improvement (CQI).'}
-            </p>
-          </div>
-        </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <button
             type="button"
-            className="btn btn-secondary btn-sm"
+            className="btn btn-ghost btn-sm"
             onClick={() => onToggleUserRole(isAuditor ? 'lecturer' : 'auditor')}
-            style={{ fontSize: '0.78rem' }}
+            style={{ fontSize: '0.76rem', color: isAuditor ? '#2563eb' : '#059669', fontWeight: 700 }}
           >
-            Switch to {isAuditor ? 'Lecturer Self-Check' : 'Auditor Mode'}
+            Active Mode: {isAuditor ? 'Auditor' : 'Lecturer'} (Switch)
           </button>
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '0.75rem'
+        }}>
+          {/* Step 1: Upload & Verify Checklist */}
+          <div 
+            onClick={() => onNavigateTab('folders')}
+            style={{
+              padding: '0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              border: `1px solid ${metrics.complianceRate === 100 ? '#bbf7d0' : '#bfdbfe'}`,
+              background: metrics.complianceRate === 100 ? '#f0fdf4' : '#eff6ff',
+              cursor: 'pointer',
+              transition: 'transform 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: metrics.complianceRate === 100 ? '#15803d' : '#1d4ed8' }}>
+                STEP 1 • EVIDENCE
+              </span>
+              <span className={`badge ${metrics.complianceRate === 100 ? 'badge-success' : 'badge-primary'}`} style={{ fontSize: '0.66rem' }}>
+                {metrics.submittedFolderCount} / 13 Folders
+              </span>
+            </div>
+            <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a', marginTop: '0.3rem' }}>
+              Folders 01 to 13
+            </div>
+            <p style={{ fontSize: '0.74rem', color: '#475569', margin: '0.2rem 0 0 0' }}>
+              Upload and verify documents across all 13 checklist slots.
+            </p>
+          </div>
+
+          {/* Step 2: Quality Pillars Evaluation */}
+          <div 
+            onClick={() => onNavigateTab('pillars')}
+            style={{
+              padding: '0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              border: `1px solid ${metrics.overallQualityIndex >= 70 ? '#bbf7d0' : '#fed7aa'}`,
+              background: metrics.overallQualityIndex >= 70 ? '#f0fdf4' : '#fffbeb',
+              cursor: 'pointer',
+              transition: 'transform 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: metrics.overallQualityIndex >= 70 ? '#15803d' : '#b45309' }}>
+                STEP 2 • RIGOR
+              </span>
+              <span className="badge" style={{ fontSize: '0.66rem', background: `${metrics.qualityTier.color}20`, color: metrics.qualityTier.color }}>
+                {metrics.overallQualityIndex}% Index
+              </span>
+            </div>
+            <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a', marginTop: '0.3rem' }}>
+              The 6 Quality Pillars
+            </div>
+            <p style={{ fontSize: '0.74rem', color: '#475569', margin: '0.2rem 0 0 0' }}>
+              Evaluate constructive alignment, feedback, and moderation.
+            </p>
+          </div>
+
+          {/* Step 3: AI Quality Review */}
+          <div 
+            onClick={() => onOpenAIReview && onOpenAIReview(course.folders?.[0] || { id: '01', title: 'Course Information & Approved Syllabus' })}
+            style={{
+              padding: '0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid #e9d5ff',
+              background: '#faf5ff',
+              cursor: 'pointer',
+              transition: 'transform 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#7e22ce' }}>
+                STEP 3 • INTELLIGENCE
+              </span>
+              <Sparkles size={13} style={{ color: '#a855f7' }} />
+            </div>
+            <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a', marginTop: '0.3rem' }}>
+              AI Scrutiny & Coach
+            </div>
+            <p style={{ fontSize: '0.74rem', color: '#475569', margin: '0.2rem 0 0 0' }}>
+              Run automated Bloom verb, rubric, and CQI gap analysis.
+            </p>
+          </div>
+
+          {/* Step 4: Report & HTML Dossier Export */}
+          <div 
+            onClick={onOpenExportHtml}
+            style={{
+              padding: '0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid #cbd5e1',
+              background: '#f8fafc',
+              cursor: 'pointer',
+              transition: 'transform 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0f172a' }}>
+                STEP 4 • ENDORSEMENT
+              </span>
+              <FileCode size={13} style={{ color: 'var(--primary)' }} />
+            </div>
+            <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a', marginTop: '0.3rem' }}>
+              Dossier & Report
+            </div>
+            <p style={{ fontSize: '0.74rem', color: '#475569', margin: '0.2rem 0 0 0' }}>
+              Generate formal PDF report and save standalone HTML dossier.
+            </p>
+          </div>
         </div>
       </div>
 
