@@ -11,7 +11,9 @@ import {
   Building 
 } from 'lucide-react';
 
-export default function EditCourseModal({ isOpen, onClose, course, onSaveCourse }) {
+export default function EditCourseModal({ isOpen, onClose, course, onSaveCourse, onSave }) {
+  const saveHandler = onSaveCourse || onSave;
+  const [savedSuccess, setSavedSuccess] = useState(false);
   const [formData, setFormData] = useState({
     code: '',
     name: '',
@@ -41,8 +43,9 @@ export default function EditCourseModal({ isOpen, onClose, course, onSaveCourse 
         auditStatus: course.auditStatus || 'Audit In Progress',
         driveFolderUrl: course.driveFolderUrl || ''
       });
+      setSavedSuccess(false);
     }
-  }, [course]);
+  }, [course, isOpen]);
 
   if (!isOpen || !course) return null;
 
@@ -52,11 +55,17 @@ export default function EditCourseModal({ isOpen, onClose, course, onSaveCourse 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSaveCourse({
-      ...course,
-      ...formData
-    });
-    onClose();
+    if (saveHandler) {
+      saveHandler({
+        ...course,
+        ...formData
+      });
+    }
+    setSavedSuccess(true);
+    setTimeout(() => {
+      setSavedSuccess(false);
+      onClose();
+    }, 400);
   };
 
   return (
@@ -301,8 +310,16 @@ export default function EditCourseModal({ isOpen, onClose, course, onSaveCourse 
             <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary btn-sm">
-              <Save size={15} /> Save Changes
+            <button 
+              type="submit" 
+              className="btn btn-primary btn-sm"
+              style={{
+                background: savedSuccess ? 'var(--success)' : 'var(--primary)',
+                borderColor: savedSuccess ? 'var(--success)' : 'var(--primary)'
+              }}
+            >
+              {savedSuccess ? <Check size={15} /> : <Save size={15} />}
+              <span>{savedSuccess ? 'Saved Successfully!' : 'Save Changes'}</span>
             </button>
           </div>
         </form>

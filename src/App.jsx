@@ -238,6 +238,7 @@ export default function App() {
         onClose={() => setIsEditCourseOpen(false)}
         course={activeCourse}
         onSave={handleUpdateCourse}
+        onSaveCourse={handleUpdateCourse}
       />
 
       <AISettingsModal
