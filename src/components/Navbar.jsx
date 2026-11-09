@@ -253,9 +253,9 @@ export default function Navbar({
             </div>
           </div>
 
-          {/* Sequential Numbered Workflow Steps Header (Bigger & Explicitly Numbered) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '0.2rem' }}>
+          {/* Sequential Numbered Workflow Steps Header (Enlarged by 1.5x) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
+            <span style={{ fontSize: '0.95rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', marginRight: '0.2rem' }}>
               Steps:
             </span>
 
@@ -265,28 +265,30 @@ export default function Navbar({
               className="btn btn-secondary"
               onClick={onOpenAISettings}
               style={{
-                padding: '0.45rem 0.85rem',
-                fontSize: '0.84rem',
+                padding: '0.65rem 1.15rem',
+                fontSize: '1.05rem',
                 fontWeight: 700,
                 border: '1.5px solid #cbd5e1',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-                gap: '0.45rem'
+                boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                gap: '0.6rem',
+                borderRadius: 'var(--radius-md)'
               }}
               title="Step 1: Configure Bring-Your-Own-AI (Gemini, OpenAI, OpenRouter)"
             >
               <span style={{
-                width: '20px',
-                height: '20px',
+                width: '30px',
+                height: '30px',
                 borderRadius: '50%',
                 background: '#3b82f6',
                 color: '#ffffff',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.74rem',
-                fontWeight: 800
+                fontSize: '1.05rem',
+                fontWeight: 800,
+                flexShrink: 0
               }}>1</span>
-              <Sparkles size={15} style={{ color: '#2563eb' }} />
+              <Sparkles size={20} style={{ color: '#2563eb' }} />
               <span>AI Settings</span>
             </button>
 
@@ -296,28 +298,30 @@ export default function Navbar({
               className="btn btn-secondary"
               onClick={onOpenEditCourse}
               style={{
-                padding: '0.45rem 0.85rem',
-                fontSize: '0.84rem',
+                padding: '0.65rem 1.15rem',
+                fontSize: '1.05rem',
                 fontWeight: 700,
                 border: '1.5px solid #cbd5e1',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-                gap: '0.45rem'
+                boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                gap: '0.6rem',
+                borderRadius: 'var(--radius-md)'
               }}
               title="Step 2: Edit assigned lecturer, internal auditor, and HOD settings"
             >
               <span style={{
-                width: '20px',
-                height: '20px',
+                width: '30px',
+                height: '30px',
                 borderRadius: '50%',
                 background: '#3b82f6',
                 color: '#ffffff',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.74rem',
-                fontWeight: 800
+                fontSize: '1.05rem',
+                fontWeight: 800,
+                flexShrink: 0
               }}>2</span>
-              <UserCheck size={15} style={{ color: '#2563eb' }} />
+              <UserCheck size={20} style={{ color: '#2563eb' }} />
               <span>Auditor, Lecturer & HOD</span>
             </button>
 
@@ -327,28 +331,30 @@ export default function Navbar({
               className="btn btn-secondary"
               onClick={onOpenDriveModal}
               style={{
-                padding: '0.45rem 0.85rem',
-                fontSize: '0.84rem',
+                padding: '0.65rem 1.15rem',
+                fontSize: '1.05rem',
                 fontWeight: 700,
                 border: '1.5px solid #cbd5e1',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-                gap: '0.45rem'
+                boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                gap: '0.6rem',
+                borderRadius: 'var(--radius-md)'
               }}
               title="Step 3: Connect with Google Drive & Apps Script"
             >
               <span style={{
-                width: '20px',
-                height: '20px',
+                width: '30px',
+                height: '30px',
                 borderRadius: '50%',
                 background: '#0284c7',
                 color: '#ffffff',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.74rem',
-                fontWeight: 800
+                fontSize: '1.05rem',
+                fontWeight: 800,
+                flexShrink: 0
               }}>3</span>
-              <Cloud size={15} style={{ color: '#0284c7' }} />
+              <Cloud size={20} style={{ color: '#0284c7' }} />
               <span>Google Drive</span>
             </button>
 
@@ -358,27 +364,29 @@ export default function Navbar({
               className="btn btn-primary"
               onClick={onOpenUpload}
               style={{
-                padding: '0.45rem 0.95rem',
-                fontSize: '0.84rem',
-                fontWeight: 700,
-                boxShadow: '0 2px 6px rgba(37,99,235,0.25)',
-                gap: '0.45rem'
+                padding: '0.65rem 1.25rem',
+                fontSize: '1.05rem',
+                fontWeight: 800,
+                boxShadow: '0 3px 8px rgba(37,99,235,0.3)',
+                gap: '0.6rem',
+                borderRadius: 'var(--radius-md)'
               }}
               title="Step 4: Upload Teaching File Folder or ZIP archive"
             >
               <span style={{
-                width: '20px',
-                height: '20px',
+                width: '30px',
+                height: '30px',
                 borderRadius: '50%',
                 background: '#ffffff',
                 color: '#1d4ed8',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.74rem',
-                fontWeight: 800
+                fontSize: '1.05rem',
+                fontWeight: 800,
+                flexShrink: 0
               }}>4</span>
-              <FolderUp size={15} />
+              <FolderUp size={20} />
               <span>Upload Folder / ZIP</span>
             </button>
 
@@ -388,28 +396,30 @@ export default function Navbar({
               className="btn btn-secondary"
               onClick={onOpenReport}
               style={{
-                padding: '0.45rem 0.85rem',
-                fontSize: '0.84rem',
+                padding: '0.65rem 1.15rem',
+                fontSize: '1.05rem',
                 fontWeight: 700,
                 border: '1.5px solid #cbd5e1',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-                gap: '0.45rem'
+                boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                gap: '0.6rem',
+                borderRadius: 'var(--radius-md)'
               }}
               title="Step 5: Preview and print formal Internal Quality Audit / Self-Check Report"
             >
               <span style={{
-                width: '20px',
-                height: '20px',
+                width: '30px',
+                height: '30px',
                 borderRadius: '50%',
                 background: '#059669',
                 color: '#ffffff',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.74rem',
-                fontWeight: 800
+                fontSize: '1.05rem',
+                fontWeight: 800,
+                flexShrink: 0
               }}>5</span>
-              <Printer size={15} style={{ color: '#059669' }} />
+              <Printer size={20} style={{ color: '#059669' }} />
               <span>{isAuditor ? 'Audit Report' : 'Self-Check Report'}</span>
             </button>
 
@@ -419,41 +429,43 @@ export default function Navbar({
               className="btn btn-secondary"
               onClick={onOpenExportHtml}
               style={{
-                padding: '0.45rem 0.9rem',
-                fontSize: '0.84rem',
+                padding: '0.65rem 1.2rem',
+                fontSize: '1.05rem',
                 fontWeight: 800,
                 background: '#eff6ff',
                 borderColor: '#93c5fd',
                 color: '#1e40af',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-                gap: '0.45rem'
+                boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                gap: '0.6rem',
+                borderRadius: 'var(--radius-md)'
               }}
               title="Step 6: Save all 13 folders, links, and audit report in a single standalone .html file"
             >
               <span style={{
-                width: '20px',
-                height: '20px',
+                width: '30px',
+                height: '30px',
                 borderRadius: '50%',
                 background: '#1e40af',
                 color: '#ffffff',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.74rem',
-                fontWeight: 800
+                fontSize: '1.05rem',
+                fontWeight: 800,
+                flexShrink: 0
               }}>6</span>
-              <FileCode size={15} style={{ color: '#1e40af' }} />
+              <FileCode size={20} style={{ color: '#1e40af' }} />
               <span>Single HTML Dossier</span>
             </button>
 
             <button
               type="button"
-              className="btn btn-ghost btn-sm"
+              className="btn btn-ghost"
               onClick={onResetSamples}
               title="Reset to default pre-loaded sample courses"
-              style={{ padding: '0.45rem' }}
+              style={{ padding: '0.55rem' }}
             >
-              <RotateCcw size={15} />
+              <RotateCcw size={18} />
             </button>
           </div>
         </div>
