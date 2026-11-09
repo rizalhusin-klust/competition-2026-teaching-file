@@ -46,3 +46,38 @@ Most university audits stop at bureaucratic completeness: *"Did the lecturer sub
 3. You can immediately test the pre-loaded benchmark courses:
    - **`ARC 3126: Architectural Design Studio III`** (Lecturer: Ar. Rizal bin Husin)
    - **`CSE 2104: Software Engineering & Agile Methods`** (Lecturer: Dr. Mazlina binti Abdul Manan)
+
+---
+
+## 🌐 Deploy to GitHub & Future Version Control (For Non-Coders)
+
+The application has been prepared with an automated **GitHub Actions CI/CD pipeline** (`.github/workflows/deploy.yml`) and a one-click push helper **`push-version.bat`**.
+
+### Step 1: Create a GitHub Repository (First Time Only)
+1. Go to [https://github.com/new](https://github.com/new).
+2. Repository name: e.g. **`competition-2026-teaching-file`** (or **`teaching-file-quality`**).
+3. Set to **Public** (or Private).
+4. Leave "Add a README file" **UNCHECKED** (an initial commit is already created).
+5. Click **Create repository**.
+6. Copy the repository URL (e.g., `https://github.com/rizalhusin-klust/competition-2026-teaching-file.git`).
+
+### Step 2: Push Your Code to GitHub (One-Click)
+1. Double-click **`push-version.bat`** in this folder.
+2. If prompted, paste your GitHub repository URL from Step 1.
+3. Type a version update note (e.g. `v1.0.0: Initial release`).
+4. The script will automatically commit and push your code to GitHub!
+
+### Step 3: Enable GitHub Pages (First Time Only)
+1. On your GitHub repository page, click **Settings** (top tab) -> **Pages** (left sidebar).
+2. Under **Build and deployment** -> **Source**, select:
+   👉 **`GitHub Actions`** (do not select "Deploy from a branch").
+3. That's it! GitHub will automatically build and publish your app online at:
+   ```
+   https://<your-username>.github.io/<repository-name>/
+   ```
+
+### 🔄 How to Update and Control Versions in the Future
+Whenever you make changes, adjust rubrics, or update sample data:
+1. Double-click **`push-version.bat`**.
+2. Type your update note (e.g., `v1.1: Updated architectural rubric for Semester 2`).
+3. Press Enter! GitHub will automatically record the new version and deploy the updated app to GitHub Pages.
