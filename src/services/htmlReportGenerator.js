@@ -419,27 +419,27 @@ export function generateStandaloneHtmlContent(course, role = 'auditor', logoData
     </div>
 
     <div class="verdict-banner">
-      <div class="verdict-card" style="border-color: ${metrics.qualityTier.color};">
+      <div class="verdict-card" style="border-color: ${metrics.qualityTier?.color || '#059669'};">
         <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Overall Quality Index</div>
-        <div class="verdict-metric" style="color: ${metrics.qualityTier.color};">${metrics.overallQualityIndex}%</div>
-        <div style="font-size: 0.85rem; font-weight: 700; color: ${metrics.qualityTier.color};">${metrics.qualityTier.label}</div>
+        <div class="verdict-metric" style="color: ${metrics.qualityTier?.color || '#059669'};">${metrics.overallQualityIndex ?? 0}%</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: ${metrics.qualityTier?.color || '#059669'};">${metrics.qualityTier?.label || 'Satisfactory'}</div>
       </div>
 
       <div class="verdict-card" style="border-color: #0284c7;">
         <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Submission Compliance</div>
-        <div class="verdict-metric" style="color: #0284c7;">${metrics.complianceRate}%</div>
-        <div style="font-size: 0.85rem; font-weight: 700; color: #0284c7;">${metrics.submittedFolders} / 13 Folders Filed</div>
+        <div class="verdict-metric" style="color: #0284c7;">${metrics.complianceRate ?? 0}%</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #0284c7;">${metrics.submittedFolderCount ?? metrics.submittedFolders ?? 0} / 13 Folders Filed</div>
       </div>
 
       <div class="verdict-card" style="border-color: #059669;">
         <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Average Quality Score</div>
-        <div class="verdict-metric" style="color: #059669;">${metrics.avgQualityScore} / 5.0</div>
+        <div class="verdict-metric" style="color: #059669;">${metrics.avgQualityScore ?? (metrics.overallQualityIndex ? (metrics.overallQualityIndex / 20).toFixed(1) : '0.0')} / 5.0</div>
         <div style="font-size: 0.85rem; font-weight: 700; color: #059669;">Weighted Across 6 Pillars</div>
       </div>
 
       <div class="verdict-card" style="border-color: #d97706;">
         <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Identified Risk Flags</div>
-        <div class="verdict-metric" style="color: #d97706;">${metrics.totalRisks}</div>
+        <div class="verdict-metric" style="color: #d97706;">${metrics.criticalRisksCount ?? metrics.totalRisks ?? 0}</div>
         <div style="font-size: 0.85rem; font-weight: 700; color: #d97706;">Accreditation Review Points</div>
       </div>
     </div>

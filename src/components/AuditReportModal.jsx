@@ -150,16 +150,16 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
               gap: '1rem',
               marginBottom: '1rem'
             }}>
-              <div style={{ border: `2px solid ${metrics.qualityTier.color}`, borderRadius: 'var(--radius-md)', padding: '1rem', textAlign: 'center' }}>
+              <div style={{ border: `2px solid ${metrics.qualityTier?.color || '#059669'}`, borderRadius: 'var(--radius-md)', padding: '1rem', textAlign: 'center' }}>
                 <div style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Overall Quality Score</div>
-                <div style={{ fontSize: '2.2rem', fontWeight: 800, color: metrics.qualityTier.color }}>{metrics.overallQualityIndex}%</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: metrics.qualityTier.color }}>{metrics.qualityTier.label}</div>
+                <div style={{ fontSize: '2.2rem', fontWeight: 800, color: metrics.qualityTier?.color || '#059669' }}>{metrics.overallQualityIndex ?? 0}%</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: metrics.qualityTier?.color || '#059669' }}>{metrics.qualityTier?.label || 'Satisfactory'}</div>
               </div>
 
               <div style={{ border: '2px solid var(--primary)', borderRadius: 'var(--radius-md)', padding: '1rem', textAlign: 'center' }}>
                 <div style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Submission Compliance</div>
-                <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--primary)' }}>{metrics.complianceRate}%</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--primary)' }}>{metrics.submittedFolderCount} of 13 Folders</div>
+                <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--primary)' }}>{metrics.complianceRate ?? 0}%</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--primary)' }}>{metrics.submittedFolderCount ?? metrics.submittedFolders ?? 0} of 13 Folders</div>
               </div>
 
               <div style={{ border: '2px solid #8b5cf6', borderRadius: 'var(--radius-md)', padding: '1rem', textAlign: 'center' }}>

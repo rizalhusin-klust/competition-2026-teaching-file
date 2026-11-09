@@ -415,8 +415,8 @@ export default function DashboardOverview({
               <Award size={16} style={{ color: '#16a34a' }} />
               EduAudit Quality Check (Teaching & Learning Rigor)
             </div>
-            <div style={{ fontSize: '1.15rem', fontWeight: 800, color: metrics.qualityTier.color, marginTop: '0.4rem' }}>
-              {metrics.overallQualityIndex}% Quality Score ({metrics.qualityTier.label})
+            <div style={{ fontSize: '1.15rem', fontWeight: 800, color: metrics.qualityTier?.color || '#059669', marginTop: '0.4rem' }}>
+              {metrics.overallQualityIndex ?? 0}% Quality Score ({metrics.qualityTier?.label || 'Satisfactory'})
             </div>
             <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
               Evaluates whether assessment questions test promised Bloom levels, whether student scripts receive rich formative feedback, and whether CQI genuinely closes the loop.
@@ -425,7 +425,7 @@ export default function DashboardOverview({
         </div>
 
         <div style={{ marginTop: '1rem', background: 'rgba(255,255,255,0.7)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(0,0,0,0.05)', fontSize: '0.85rem', color: '#334155' }}>
-          <strong>Executive Auditor Verdict:</strong> {summaryText}
+          <strong>{isAuditor ? 'Executive Auditor Verdict:' : 'Executive Self-Check Verdict:'}</strong> {summaryText}
         </div>
       </div>
 

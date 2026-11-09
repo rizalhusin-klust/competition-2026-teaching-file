@@ -8,11 +8,14 @@ export function calculateAuditMetrics(course) {
     return {
       overallQualityIndex: 0,
       complianceRate: 0,
+      avgQualityScore: 0,
       pillarScores: {},
       qualityTier: QUALITY_TIERS[3],
       submittedFolderCount: 0,
+      submittedFolders: 0,
       totalFolderCount: 13,
       criticalRisksCount: 0,
+      totalRisks: 0,
       activeCarsCount: 0
     };
   }
@@ -73,15 +76,19 @@ export function calculateAuditMetrics(course) {
   const tier = QUALITY_TIERS.find(t => overallQualityIndex >= t.minScore) || QUALITY_TIERS[QUALITY_TIERS.length - 1];
 
   const activeCarsCount = (course.correctiveActions || []).filter(c => c.status !== 'Closed').length;
+  const avgQualityScore = Number((totalScoreSum / (TEACHING_FILE_ITEMS.length || 13)).toFixed(1));
 
   return {
     overallQualityIndex,
     complianceRate,
+    avgQualityScore,
     pillarScores,
     qualityTier: tier,
     submittedFolderCount: submittedCount,
+    submittedFolders: submittedCount,
     totalFolderCount: TEACHING_FILE_ITEMS.length,
     criticalRisksCount,
+    totalRisks: criticalRisksCount,
     activeCarsCount
   };
 }
