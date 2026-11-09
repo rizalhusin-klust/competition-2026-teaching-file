@@ -77,7 +77,7 @@ export default function StandaloneHtmlExportModal({ isOpen, onClose, course, use
                 Export Standalone HTML Dossier
               </h3>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: 0 }}>
-                Save all 13 folders, links, and OBE quality findings in a single portable .html file.
+                Save all 14 folders (00 to 13), links, and OBE quality findings in a single portable .html file.
               </p>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default function StandaloneHtmlExportModal({ isOpen, onClose, course, use
           }}>
             <Sparkles size={20} style={{ color: 'var(--primary)', flexShrink: 0, marginTop: '2px' }} />
             <div style={{ fontSize: '0.82rem', color: '#1e3a8a', lineHeight: 1.5 }}>
-              <strong>100% Self-Contained & Universal:</strong> This single file embeds the official KLUST letterhead logo, all 13 folder audit findings, direct Google Drive links, and signature blocks. It opens in <strong>any web browser</strong> offline without requiring internet, hosting, or external stylesheets!
+              <strong>100% Self-Contained & Universal:</strong> This single file embeds the official KLUST letterhead logo, all 14 folder audit findings (00 to 13), direct Google Drive links, and signature blocks. It opens in <strong>any web browser</strong> offline without requiring internet, hosting, or external stylesheets!
             </div>
           </div>
 
@@ -189,7 +189,7 @@ export default function StandaloneHtmlExportModal({ isOpen, onClose, course, use
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <CheckCircle2 size={15} style={{ color: 'var(--success)' }} />
-                <span>All 13 Folders with File Lists & Links</span>
+                <span>All 14 Folders (00 to 13) with File Lists & Links</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <CheckCircle2 size={15} style={{ color: 'var(--success)' }} />

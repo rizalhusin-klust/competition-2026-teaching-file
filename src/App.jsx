@@ -37,7 +37,7 @@ export default function App() {
   const [courses, setCourses] = useState(() => getStoredCourses());
   const [activeCourseId, setActiveCourseIdState] = useState(() => getActiveCourseId());
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'folders' | 'pillars' | 'alignment'
-  const [selectedFolderId, setSelectedFolderId] = useState('01');
+  const [selectedFolderId, setSelectedFolderId] = useState('00');
 
   // Dual Role Perspective: 'auditor' | 'lecturer'
   const [userRole, setUserRole] = useState(() => getStoredUserRole());
@@ -156,7 +156,7 @@ export default function App() {
             onClick={() => setActiveTab('folders')}
           >
             <FolderCheck size={18} />
-            <span>Teaching File Folders (01 to 13)</span>
+            <span>Teaching File Folders (00 to 13)</span>
           </button>
 
           <button

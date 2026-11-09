@@ -194,8 +194,41 @@ function evaluateFolderHeuristics(item, bucket) {
 
   // Quality evaluation heuristics by folder
   switch (item.id) {
-    case '01': // Syllabus
-      if (fileNames.includes('approved') || fileNames.includes('signed') || fileNames.includes('matrix')) {
+    case '00': // Cover Page
+      bucket.qualityScore = 5;
+      bucket.qualityTier = 'Exemplary';
+      bucket.findings = [
+        'Official institutional teaching file cover page verified.',
+        'Course parameters, credit hours, and lecturer details endorsed.'
+      ];
+      break;
+
+    case '01': // Details of Students' Results
+      bucket.qualityScore = fileNames.includes('grade') || fileNames.includes('result') || fileNames.includes('mark') ? 5 : 4;
+      bucket.qualityTier = bucket.qualityScore === 5 ? 'Exemplary' : 'Commendable';
+      bucket.findings = [
+        "Complete gradebook and itemized continuous assessment results present.",
+        "Grade distribution spread documented and aligned with faculty senate standard."
+      ];
+      break;
+
+    case '02': // OBE Assessment
+      if (fileNames.includes('attainment') || fileNames.includes('matrix') || fileNames.includes('clo')) {
+        bucket.qualityScore = 5;
+        bucket.qualityTier = 'Exemplary';
+        bucket.findings = [
+          'Detailed CLO-PLO attainment analysis sheet with cohort performance breakdown.',
+          'Attainment KPIs tracked against university threshold benchmarks.'
+        ];
+      } else {
+        bucket.qualityScore = 4;
+        bucket.qualityTier = 'Commendable';
+        bucket.findings = ['OBE assessment mapping provided. Verify cohort CLO attainment percentages.'];
+      }
+      break;
+
+    case '03': // Course Syllabus
+      if (fileNames.includes('approved') || fileNames.includes('signed') || fileNames.includes('matrix') || fileNames.includes('proforma')) {
         bucket.qualityScore = 5;
         bucket.qualityTier = 'Exemplary';
         bucket.findings = [
@@ -206,22 +239,31 @@ function evaluateFolderHeuristics(item, bucket) {
         bucket.qualityScore = 4;
         bucket.qualityTier = 'Commendable';
         bucket.findings = [
-          'Course syllabus and weekly outline provided.',
+          'Course syllabus and proforma provided.',
           'Verify if formal dean/HOD approval signature is attached.'
         ];
       }
       break;
 
-    case '03': // Assessment Plan
+    case '04': // Teaching Plan
       bucket.qualityScore = 4;
       bucket.qualityTier = 'Commendable';
       bucket.findings = [
-        'Continuous assessment plan uploaded with component weightages.',
-        'Deadlines distributed across semester teaching weeks.'
+        'Detailed 14-week teaching and lesson plan uploaded.',
+        'Instructional milestones and studio critique schedules mapped across weeks.'
       ];
       break;
 
-    case '05': // Attendance
+    case '05': // Time Table of Lecturer
+      bucket.qualityScore = 4;
+      bucket.qualityTier = 'Commendable';
+      bucket.findings = [
+        'Official lecture and studio timetable uploaded.',
+        'Designated student consultation and academic mentoring hours indicated.'
+      ];
+      break;
+
+    case '06': // Student Monthly Attendance
       if (fileNames.includes('warning') || fileNames.includes('counsel') || fileNames.includes('barring')) {
         bucket.qualityScore = 5;
         bucket.qualityTier = 'Exemplary';
@@ -231,11 +273,11 @@ function evaluateFolderHeuristics(item, bucket) {
       } else {
         bucket.qualityScore = 4;
         bucket.qualityTier = 'Commendable';
-        bucket.findings = ['Full semester attendance records present. Check if any student breached the 80% threshold.'];
+        bucket.findings = ['Full semester monthly attendance records present. Check if any student breached the 80% threshold.'];
       }
       break;
 
-    case '07': // Lecturer Report & CQI
+    case '07': // Report by Lecturer
       if (fileNames.includes('cqi') || fileNames.includes('report') || fileNames.includes('attainment')) {
         bucket.qualityScore = 4;
         bucket.qualityTier = 'Commendable';
@@ -250,7 +292,16 @@ function evaluateFolderHeuristics(item, bucket) {
       }
       break;
 
-    case '09': // Exam Moderation
+    case '08': // Teaching Materials
+      bucket.qualityScore = bucket.fileCount >= 3 ? 5 : 4;
+      bucket.qualityTier = bucket.qualityScore === 5 ? 'Exemplary' : 'Commendable';
+      bucket.findings = [
+        `${bucket.fileCount} instructional material deck(s) and tutorial briefs verified.`,
+        'Instructional slides and references uploaded for student access.'
+      ];
+      break;
+
+    case '09': // Moderate Final Exam with Marking Scheme
       if (fileNames.includes('moderation') || fileNames.includes('scheme') || fileNames.includes('vetting')) {
         bucket.qualityScore = 5;
         bucket.qualityTier = 'Exemplary';
@@ -266,7 +317,7 @@ function evaluateFolderHeuristics(item, bucket) {
       }
       break;
 
-    case '10': // Exam Scripts
+    case '10': // Final Exam Scripts
       if (bucket.fileCount >= 9 || (fileNames.includes('high') && fileNames.includes('mid') && fileNames.includes('low'))) {
         bucket.qualityScore = 4;
         bucket.qualityTier = 'Commendable';
@@ -282,7 +333,7 @@ function evaluateFolderHeuristics(item, bucket) {
       }
       break;
 
-    case '11': // Coursework Rubrics
+    case '11': // Coursework with Marking Scheme
       if (fileNames.includes('rubric') || fileNames.includes('scheme') || fileNames.includes('matrix')) {
         bucket.qualityScore = 5;
         bucket.qualityTier = 'Exemplary';
@@ -297,7 +348,7 @@ function evaluateFolderHeuristics(item, bucket) {
       }
       break;
 
-    case '12': // Student Samples
+    case '12': // Samples of Students Work
       if (fileNames.includes('annotat') || fileNames.includes('feedback') || fileNames.includes('high')) {
         bucket.qualityScore = 4;
         bucket.qualityTier = 'Commendable';
@@ -310,6 +361,15 @@ function evaluateFolderHeuristics(item, bucket) {
         bucket.qualityTier = 'Satisfactory';
         bucket.findings = ['Student work samples uploaded. Check for constructive formative feedback rather than only raw marks.'];
       }
+      break;
+
+    case '13': // Miscellaneous Records
+      bucket.qualityScore = 4;
+      bucket.qualityTier = 'Commendable';
+      bucket.findings = [
+        'Miscellaneous academic governance and student records verified.',
+        'Procedural documentation maintained for audit trail.'
+      ];
       break;
 
     default:

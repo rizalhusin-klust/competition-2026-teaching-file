@@ -487,7 +487,7 @@ export default function Navbar({
                 gap: '0.6rem',
                 borderRadius: 'var(--radius-md)'
               }}
-              title="Step 6: Save all 13 folders, links, and audit report in a single standalone .html file"
+              title="Step 6: Save all 14 folders, links, and audit report in a single standalone .html file"
             >
               <span style={{
                 width: '30px',

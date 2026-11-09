@@ -25,7 +25,7 @@ import { TEACHING_FILE_ITEMS, QUALITY_PILLARS } from '../data/auditRubrics';
 export default function FolderExplorerView({
   course,
   onUpdateCourse,
-  initialFolderId = '01',
+  initialFolderId = '00',
   userRole = 'auditor',
   onOpenAIReview
 }) {
@@ -256,8 +256,8 @@ export default function FolderExplorerView({
     }
   };
 
-  // One-click create/initialize all 13 standard Teaching File Folders
-  const handleInitializeAll13Folders = () => {
+  // One-click create/initialize all 14 standard Teaching File Folders (00 to 13)
+  const handleInitializeAll14Folders = () => {
     const updatedAudits = { ...(course.folderAudits || {}) };
     let initializedCount = 0;
 
@@ -278,7 +278,7 @@ export default function FolderExplorerView({
     });
 
     onUpdateCourse({ ...course, folderAudits: updatedAudits });
-    setCreatedFolderNotification('Standard 13 Teaching File Folders initialized in this course portfolio!');
+    setCreatedFolderNotification('Standard 14 Teaching File Folders (00 to 13) initialized in this course portfolio!');
     setTimeout(() => setCreatedFolderNotification(null), 3500);
   };
 
@@ -290,7 +290,7 @@ export default function FolderExplorerView({
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'minmax(280px, 320px) 1fr', gap: '1.5rem', alignItems: 'flex-start' }} className="fade-in">
       
-      {/* Left Sidebar: 13 Folders List */}
+      {/* Left Sidebar: 14 Folders List */}
       <div className="card" style={{ padding: '0.85rem', position: 'sticky', top: '5rem', maxHeight: 'calc(100vh - 6rem)', overflowY: 'auto' }}>
         <div style={{ padding: '0.5rem 0.5rem 0.85rem 0.5rem', borderBottom: '1px solid var(--border)', marginBottom: '0.5rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -300,16 +300,16 @@ export default function FolderExplorerView({
             <button
               type="button"
               className="btn btn-ghost btn-sm"
-              onClick={handleInitializeAll13Folders}
+              onClick={handleInitializeAll14Folders}
               style={{ padding: '0.2rem 0.45rem', fontSize: '0.72rem', color: 'var(--primary)', fontWeight: 700 }}
-              title="Create/Ensure all 13 official standard teaching folders are present"
+              title="Create/Ensure all 14 official standard teaching folders (00 to 13) are present"
             >
               <FolderPlus size={13} />
-              <span>+ Create All 13</span>
+              <span>+ Create All 14</span>
             </button>
           </div>
           <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
-            13 Standard Accreditation Folders
+            14 Standard Accreditation Folders (00 to 13)
           </p>
         </div>
 

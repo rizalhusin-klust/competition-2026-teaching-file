@@ -374,7 +374,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
                 Select Teaching File Folder
               </h4>
               <p style={{ fontSize: '0.84rem', color: '#0284c7', marginTop: '0.25rem', maxWidth: '380px', margin: '0.25rem auto 1.25rem auto' }}>
-                Select the folder containing your teaching file documents. Files will be auto-categorized into the 13 folders!
+                Select the folder containing your teaching file documents. Files will be auto-categorized into the 14 standardized folders (00 to 13)!
               </p>
 
               <input
@@ -439,7 +439,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
                   <Cloud size={16} /> Link Directly to Google Drive
                 </div>
                 <p style={{ fontSize: '0.78rem', color: '#15803d', marginTop: '0.2rem' }}>
-                  Paste the Google Drive folder link where the lecturer has uploaded their 13 folders.
+                  Paste the Google Drive folder link where the lecturer has uploaded their 14 folders (00 to 13).
                 </p>
               </div>
 

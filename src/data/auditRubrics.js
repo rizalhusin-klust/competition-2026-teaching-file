@@ -1,4 +1,19 @@
 // Comprehensive Teaching & Learning Quality Audit Standards (OBE & Accreditation Framework)
+// Exactly aligned with Faculty Accreditation & University Quality Guidelines:
+// 00 TEACHING FILE COVER PAGE
+// 01 DETAILS OF STUDENTS' RESULTS
+// 02 OBE ASSESSMENT
+// 03 COURSE SYLLABUS
+// 04 TEACHING PLAN
+// 05 TIME TABLE OF LECTURER
+// 06 STUDENT MONTHLY ATTENDANCE
+// 07 REPORT BY LECTURER
+// 08 TEACHING MATERIALS
+// 09 MODERATE FINAL EXAM WITH MARKING SCHEME
+// 10 FINAL EXAM SCRIPTS
+// 11 COURSEWORK WITH MARKING SCHEME
+// 12 SAMPLES OF STUDENTS WORK
+// 13 MISCELLANEOUS RECORDS
 
 export const QUALITY_PILLARS = [
   {
@@ -59,14 +74,14 @@ export const QUALITY_PILLARS = [
   },
   {
     id: 'curriculum',
-    name: 'Curriculum Currency & Materials',
+    name: 'Curriculum Currency & Learning Resources',
     code: 'PIL-5',
     weight: 10,
     icon: 'BookOpen',
     color: '#06b6d4', // cyan
-    description: 'Up-to-date learning resources, syllabus currency, industry relevance, and engaging instructional materials.',
+    description: 'Quality and contemporary relevance of teaching slides, studio briefs, readings, and digital learning assets.',
     keyQuestions: [
-      'Are core textbook references and journal readings published within the last 5 years?',
+      'Are references contemporary (published within the last 5 years where applicable)?',
       'Are lecture slides and tutorial briefs detailed, contemporary, and digitally accessible?',
       'Is weekly syllabus progression logical and paced appropriately across 14 teaching weeks?'
     ]
@@ -89,174 +104,162 @@ export const QUALITY_PILLARS = [
 
 export const TEACHING_FILE_ITEMS = [
   {
-    id: '01',
-    code: 'Folder 01',
-    title: 'Course Syllabus & Course Outline',
-    driveFolderName: '01 Course Syllabus & Course Outline',
-    pillarId: 'alignment',
-    essentialKeywords: ['syllabus', 'outline', 'clo', 'plo', 'learning outcomes', 'credit hours', 'weekly plan'],
+    id: '00',
+    code: 'Folder 00',
+    title: 'Teaching File Cover Page',
+    driveFolderName: '00 TEACHING FILE COVER PAGE',
+    pillarId: 'governance',
+    essentialKeywords: ['cover', 'cover page', 'frontpage', 'teaching file cover', 'portfolio cover', '00'],
     complianceCriteria: [
-      'Course code, title, and credit hours match academic handbook.',
-      'Approved and signed by Head of Department / Dean.',
-      'Explicit mapping between CLOs, PLOs, and Bloom Taxonomy domain levels.'
+      'Official institutional course cover page completed with course code, title, and session.',
+      'Lecturer name, department, credit hours, and faculty indicated accurately.',
+      'Verified and signed by course coordinator or HOD.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Constructive Alignment Clarity',
-        description: 'CLOs use measurable action verbs according to Bloom’s Taxonomy (e.g., Analyze, Evaluate, Synthesize rather than Understand, Know).',
-        benchmark: '100% of CLOs possess precise cognitive/psychomotor verbs and clear attainment thresholds.'
-      },
+        criterion: 'Completeness & Institutional Branding',
+        description: 'Standard faculty cover template properly filled with all academic parameters verified.',
+        benchmark: '100% complete metadata with institutional endorsement.'
+      }
+    ]
+  },
+  {
+    id: '01',
+    code: 'Folder 01',
+    title: "Details of Students' Results",
+    driveFolderName: "01 DETAILS OF STUDENTS' RESULTS",
+    pillarId: 'governance',
+    essentialKeywords: ['results', 'gradebook', 'marks', 'student results', 'mark sheet', 'summary of marks', '01'],
+    complianceCriteria: [
+      'Complete official gradebook sheet with itemized continuous assessment and final scores.',
+      'Grade distribution summary (A, B, C, D, F) matching faculty senate records.',
+      'Endorsed by department exam coordinator / HOD.'
+    ],
+    qualityAuditCriteria: [
       {
-        criterion: 'SLT Workload Coherence',
-        description: 'Total Student Learning Time (SLT) reflects 40 hours per credit (e.g., 120-160h for a 3-4 credit course) realistically split between face-to-face and independent study.',
-        benchmark: 'Transparent breakdown of lecture, tutorial, studio, and self-study hours.'
+        criterion: 'Grade Distribution Fairness & Curve',
+        description: 'Analysis of score spread and standard deviation across distinction, pass, and fail ranges.',
+        benchmark: 'Balanced score distribution with documented justification for anomalies.'
       }
     ]
   },
   {
     id: '02',
     code: 'Folder 02',
-    title: 'Time Table',
-    driveFolderName: '02 Time Table',
-    pillarId: 'governance',
-    essentialKeywords: ['timetable', 'time table', 'schedule', 'venue', 'studio hours', 'contact hours'],
+    title: 'OBE Assessment',
+    driveFolderName: '02 OBE ASSESSMENT',
+    pillarId: 'alignment',
+    essentialKeywords: ['obe', 'obe assessment', 'clo attainment', 'plo attainment', 'assessment plan', 'obe matrix', '02'],
     complianceCriteria: [
-      'Official academic calendar semester timetable uploaded.',
-      'Contact hours correspond with syllabus credit requirements.',
-      'Venue and consultation hours indicated.'
+      'Explicit Course Learning Outcomes (CLOs) to Programme Outcomes (PLOs) mapping matrix.',
+      'Target vs actual CLO attainment percentages calculated for the student cohort.',
+      'Assessment breakdown aligned with prescribed cognitive, psychomotor, or affective domains.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Consultation Availability',
-        description: 'Designated lecturer consultation / office hours clearly scheduled and communicated to support struggling learners.',
-        benchmark: 'Minimum 2-4 hours per week dedicated for student mentoring and academic advisory.'
+        criterion: 'OBE Constructive Alignment & Attainment Tracking',
+        description: 'All assessments measure designated Bloom taxonomy levels with measurable attainment KPI (e.g. >=75% students score >=50%).',
+        benchmark: 'Documented cohort CLO attainment analysis showing closed-loop evaluation.'
       }
     ]
   },
   {
     id: '03',
     code: 'Folder 03',
-    title: 'Continuous Assessment Plan',
-    driveFolderName: '03 Continuous Assessment Plan',
-    pillarId: 'assessment',
-    essentialKeywords: ['assessment plan', 'continuous assessment', 'weightage', 'deadlines', 'coursework breakdown'],
+    title: 'Course Syllabus',
+    driveFolderName: '03 COURSE SYLLABUS',
+    pillarId: 'alignment',
+    essentialKeywords: ['syllabus', 'course syllabus', 'course info', 'approved syllabus', 'course profile', 'proforma', '03'],
     complianceCriteria: [
-      'Complete table of all assessment components with percentage weightages summing to 100%.',
-      'Submission deadlines scheduled systematically across weeks (avoiding end-of-semester bunching).',
-      'Distributed to students during Week 1 of the semester.'
+      'Approved syllabus signed by Head of Department / Dean.',
+      'Student Learning Time (SLT) reflects 40 hours per credit (120-160 hours total).',
+      'Cognitive and psychomotor action verbs clearly defined.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Assessment Spacing & Pacing',
-        description: 'Assessments are scaffolded progressively from formative checkpoints to summative submissions, enabling feed-forward improvement.',
-        benchmark: 'At least one major formative checkpoint before Week 7 so students know their standing.'
-      },
-      {
-        criterion: 'CLO Coverage Balance',
-        description: 'Weightages assigned to each assessment component proportionally match the complexity and domain of the mapped CLO.',
-        benchmark: 'Every CLO is tested with appropriate depth without overloading a single outcome.'
+        criterion: 'Syllabus Approval & SLT Coherence',
+        description: 'Syllabus reflects the official accredited program handbook and specifies weekly topic progression.',
+        benchmark: 'Fully validated syllabus with clear prerequisites and credit allocation.'
       }
     ]
   },
   {
     id: '04',
     code: 'Folder 04',
-    title: 'List of References',
-    driveFolderName: '04 List of References',
+    title: 'Teaching Plan',
+    driveFolderName: '04 TEACHING PLAN',
     pillarId: 'curriculum',
-    essentialKeywords: ['references', 'bibliography', 'reading list', 'textbook', 'journal', 'digital resources'],
+    essentialKeywords: ['teaching plan', 'weekly plan', 'schedule', 'lesson plan', 'course outline', 'weekly outline', '04'],
     complianceCriteria: [
-      'Prescribed core textbooks and supplementary references listed.',
-      'Available in physical university library or institutional digital repositories.'
+      'Detailed 14-week teaching and learning plan distributed to students in Week 1.',
+      'Itemized schedule of lectures, studios, tutorials, and submission milestones.',
+      'Clear references to weekly readings and assigned tasks.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Reference Currency (<5 Years)',
-        description: 'At least 60% of listed books, industry standards, and journal articles published within the last 5 years, ensuring cutting-edge knowledge.',
-        benchmark: 'References reflect modern computational, sustainability, or industry advancements.'
-      },
-      {
-        criterion: 'Digital & Open Access Accessibility',
-        description: 'Links, DOIs, or digital library codes provided for student ease of access.',
-        benchmark: 'No broken links; accessible via university library portal.'
+        criterion: 'Pacing & Pedagogical Progression',
+        description: 'Logical sequencing from introductory concepts to complex problem-solving without excessive crunch before deadlines.',
+        benchmark: 'Well-paced weekly progression distributed early to students.'
       }
     ]
   },
   {
     id: '05',
     code: 'Folder 05',
-    title: 'Student Attendance List',
-    driveFolderName: '05 Student Attendance List',
+    title: 'Time Table of Lecturer',
+    driveFolderName: '05 TIME TABLE OF LECTURER',
     pillarId: 'governance',
-    essentialKeywords: ['attendance', 'absence', 'roster', '80% threshold', 'barring list', 'student list'],
+    essentialKeywords: ['time table', 'timetable', 'lecturer timetable', 'consultation hours', 'venue', '05'],
     complianceCriteria: [
-      'Complete weekly attendance logs for lecture and studio sessions.',
-      'Summary percentage calculated for all registered students.'
+      'Official departmental master semester timetable indicating designated studio/lecture contact hours.',
+      'Designated consultation / office hours clearly scheduled for student academic mentoring.',
+      'Studio venue and studio master assignment confirmed.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Early Warning & Remediation (<80%)',
-        description: 'Lecturer identifies students absent for more than 2 consecutive sessions early; documented warning letters or counseling records.',
-        benchmark: 'Proactive intervention recorded before barring threshold is reached.'
-      },
-      {
-        criterion: 'Integrity & Verification',
-        description: 'Signatures or digital LMS timestamp logs verified without retroactive bulk-marking.',
-        benchmark: 'Verified logs with justification for excused absences (MC/Official Letter).'
+        criterion: 'Consultation Availability & Venue Allocation',
+        description: 'Scheduled office hours provide sufficient access (minimum 2-4 hours weekly) for struggling students.',
+        benchmark: 'Officially endorsed timetable with accessible student advisory slots.'
       }
     ]
   },
   {
     id: '06',
     code: 'Folder 06',
-    title: 'Student Course Evaluation Report',
-    driveFolderName: '06 Student Course Evaluation Report',
+    title: 'Student Monthly Attendance',
+    driveFolderName: '06 STUDENT MONTHLY ATTENDANCE',
     pillarId: 'governance',
-    essentialKeywords: ['evaluation', 'feedback', 'student survey', 'rating', 'likert', 'comments', 'critique'],
+    essentialKeywords: ['attendance', 'monthly attendance', 'student attendance', 'absence', 'barring', '80% threshold', '06'],
     complianceCriteria: [
-      'Institutional student feedback report generated and included in folder.',
-      'Response rate indicated (aim for >= 70% participation).'
+      'Monthly/weekly signed student attendance logs or verified digital LMS attendance exports.',
+      'Overall attendance percentage computed for all registered students.',
+      'Early warning notifications issued to students at risk of falling below the 80% threshold.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Student Satisfaction & Trend Analysis',
-        description: 'Overall student satisfaction rating and analysis across teaching clarity, assessment fairness, and learning resource quality.',
-        benchmark: 'Average score >= 4.0 / 5.0 (or >= 80%); constructive analysis of recurring student concerns.'
-      },
-      {
-        criterion: 'Lecturer Feedback Closing',
-        description: 'Lecturer reviews student qualitative remarks in their final report, explaining actions taken or planned in response.',
-        benchmark: 'Transparent acknowledgement of student feedback and practical remedial steps.'
+        criterion: 'Attendance Integrity & Early Intervention',
+        description: 'Proactive counseling letters and official warnings documented prior to barring threshold enforcement.',
+        benchmark: 'Comprehensive attendance tracking with verified absence justifications.'
       }
     ]
   },
   {
     id: '07',
     code: 'Folder 07',
-    title: 'Report by Lecturer & CQI Review',
-    driveFolderName: '07 Report by Lecturer',
+    title: 'Report by Lecturer',
+    driveFolderName: '07 REPORT BY LECTURER',
     pillarId: 'cqi',
-    essentialKeywords: ['lecturer report', 'cqi', 'reflection', 'attainment review', 'closing the loop', 'action plan'],
+    essentialKeywords: ['report by lecturer', 'course report', 'end of semester report', 'cqi review', 'reflection', '07'],
     complianceCriteria: [
-      'Official End of Semester Course Report completed and signed.',
-      'CLO and PLO attainment percentages calculated for the entire cohort.',
-      'CQI section filled with Strengths, Weaknesses, and Action Plan.'
+      'Official End of Semester Course Report completed and signed by lecturer.',
+      'Critical reflection on student attainment, cohort challenges, and external jury feedback.',
+      'Concrete SMART Continual Quality Improvement (CQI) action plan for subsequent offerings.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Root-Cause Attainment Analysis',
-        description: 'Deep pedagogical reflection explaining why specific CLOs attained or missed targets (e.g. prerequisite knowledge deficit, software learning curve).',
-        benchmark: 'Avoids superficial statements like "students need to study harder"; investigates teaching methods.'
-      },
-      {
-        criterion: 'SMART CQI Action Plan',
-        description: 'Specific, Measurable, Achievable, Relevant, and Time-bound enhancements formulated for next semester offering.',
-        benchmark: 'Identifies concrete intervention (e.g. "Week 6 peer critiquing session", "supplementary Revit BIM video module").'
-      },
-      {
-        criterion: 'Loop Closing Evidence',
-        description: 'Verification that enhancements promised in previous semester’s CQI report were actually executed this semester.',
-        benchmark: 'Demonstrated improvement in previously flagged weak areas.'
+        criterion: 'Root-Cause Pedagogical Reflection & Closing the Loop',
+        description: 'Deep analytical insight examining instructional strengths and identifying concrete pedagogical adjustments rather than superficial remarks.',
+        benchmark: 'Clear evidence of closing the quality loop from previous semester CQI.'
       }
     ]
   },
@@ -264,120 +267,97 @@ export const TEACHING_FILE_ITEMS = [
     id: '08',
     code: 'Folder 08',
     title: 'Teaching Materials',
-    driveFolderName: '08 Teaching Materials',
+    driveFolderName: '08 TEACHING MATERIALS',
     pillarId: 'curriculum',
-    essentialKeywords: ['slides', 'lecture notes', 'briefs', 'tutorials', 'handouts', 'recordings', 'learning materials'],
+    essentialKeywords: ['teaching materials', 'slides', 'lecture notes', 'briefs', 'handouts', 'tutorials', '08'],
     complianceCriteria: [
-      'Learning materials for all 14 teaching weeks uploaded in organized structure.',
-      'Covers all topic modules outlined in the approved course syllabus.'
+      'Comprehensive instructional slide decks, tutorial briefs, and technical drawing guides across all modules.',
+      'Uploaded to LMS or Google Drive and accessible to students.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Pedagogical Depth & Clarity',
-        description: 'Slides and materials contain rich conceptual depth, explanatory diagrams, case studies, and practical examples rather than sparse bullet points.',
-        benchmark: 'Demonstrates modern instructional design with interactive prompts and learning activities.'
-      },
-      {
-        criterion: 'Industry Relevancy & Technology Adoption',
-        description: 'Incorporates current industry tools, real-world case studies, professional ethics, or sustainable design considerations.',
-        benchmark: 'Exposure to contemporary professional practice.'
+        criterion: 'Contemporary Relevancy & Instructional Quality',
+        description: 'Visually rich, contemporary instructional materials incorporating real-world case studies, current software tools, and statutory codes.',
+        benchmark: 'High pedagogical depth supporting self-directed learner inquiry.'
       }
     ]
   },
   {
     id: '09',
     code: 'Folder 09',
-    title: 'Moderated Final Exam with Marking Scheme',
-    driveFolderName: '09 Moderated Final Exam with Marking Scheme',
+    title: 'Moderate Final Exam with Marking Scheme',
+    driveFolderName: '09 MODERATE FINAL EXAM WITH MARKING SCHEME',
     pillarId: 'assessment',
-    essentialKeywords: ['moderated exam', 'marking scheme', 'answer key', 'pre-moderation', 'vetting', 'exam paper'],
+    essentialKeywords: ['moderate final exam', 'final exam', 'exam paper', 'marking scheme', 'pre-moderation', 'vetting', '09'],
     complianceCriteria: [
-      'Complete final examination paper included.',
-      'Full, detailed marking scheme / solution key with mark distribution per sub-question.',
-      'Internal and external moderation vetting forms signed before exam date.'
+      'Complete final examination paper and itemized solution marking scheme.',
+      'Pre-moderation vetting committee forms signed prior to exam execution.',
+      'Note: For 100% Coursework courses, this folder is officially marked EXEMPT.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Pre-Moderation Rigor & Constructive Changes',
-        description: 'Evidence that vetting committee reviewed question clarity, timing, Bloom taxonomy levels, and lecturer executed recommended amendments.',
-        benchmark: 'Signed moderation report showing active feedback and pre-exam paper revisions.'
-      },
-      {
-        criterion: 'Marking Scheme Granularity',
-        description: 'Marking scheme provides clear partial-credit rules, expected formula derivations, keywords, or alternative valid methodologies.',
-        benchmark: 'Objective, transparent, and reproducible grading criteria.'
+        criterion: 'Moderation Rigor & Objective Grading Criteria',
+        description: 'Evidence that question clarity, Bloom level mapping, and time allocations were vetted by internal examiners.',
+        benchmark: 'Transparent marking schemes with reproducible rubrics (or official 100% Coursework exemption).'
       }
     ]
   },
   {
     id: '10',
     code: 'Folder 10',
-    title: 'Final Exam Scripts (3 High, 3 Mid, 3 Low)',
-    driveFolderName: '10 Final Exam Scripts (3 higher, 3 lower, and 3 middle scores)',
+    title: 'Final Exam Scripts',
+    driveFolderName: '10 FINAL EXAM SCRIPTS',
     pillarId: 'marking',
-    essentialKeywords: ['exam scripts', 'high mid low', '3 higher 3 lower', 'moderation scripts', 'graded answer booklets'],
+    essentialKeywords: ['final exam scripts', 'exam scripts', 'answer booklets', 'high mid low scripts', '10'],
     complianceCriteria: [
-      'Exactly 9 representative exam scripts included: 3 High, 3 Mid, 3 Low scores.',
-      'Marks accurately totaled and synchronized with official gradebook.'
+      'Representative sample scripts (3 High, 3 Mid, 3 Low scores) with itemized examiner marks.',
+      'Post-moderation counter-signature by second examiner.',
+      'Note: For 100% Coursework courses, this folder is officially marked EXEMPT.'
     ],
     qualityAuditCriteria: [
       {
         criterion: 'Marking Consistency & Post-Moderation',
-        description: 'Consistent grading standards applied across all scripts without arbitrary mark deductions or inflation; post-moderation sampling verified.',
-        benchmark: 'Clear checkmarks, itemized scores matching the scheme, and second-examiner post-moderation signature.'
-      },
-      {
-        criterion: 'Grade Differentiation Quality',
-        description: 'High, Mid, and Low samples show clear intellectual distinctions reflecting different levels of CLO mastery.',
-        benchmark: 'Representative spread across top distinction, median competence, and minimum pass/fail threshold.'
+        description: 'Fair and calibrated grading matching the published scheme across distinction and threshold pass scripts.',
+        benchmark: 'Verified sample scripts with post-moderation endorsement (or official 100% Coursework exemption).'
       }
     ]
   },
   {
     id: '11',
     code: 'Folder 11',
-    title: 'Coursework with Marking Schemes / Rubrics',
-    driveFolderName: '11 Coursework with Marking Schemes',
+    title: 'Coursework with Marking Scheme',
+    driveFolderName: '11 COURSEWORK WITH MARKING SCHEME',
     pillarId: 'assessment',
-    essentialKeywords: ['coursework briefs', 'project brief', 'assignment', 'rubric matrix', 'marking guide', 'marking schemes'],
+    essentialKeywords: ['coursework', 'coursework with marking scheme', 'project brief', 'assignment brief', 'rubrics', 'rubric matrix', '11'],
     complianceCriteria: [
-      'All continuous assessment briefs (assignments, studio projects, tests, quizzes) uploaded.',
-      'Each brief explicitly states objectives, submission guidelines, deadlines, and CLO mapping.'
+      'All project briefs, assignment sheets, and studio design problem statements uploaded.',
+      'Explicit analytic rubric matrices detailing performance descriptors (Exemplary to Unsatisfactory) for each criterion.',
+      'Weightage breakdown matching approved course syllabus.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Analytic Rubric Quality & Descriptors',
-        description: 'Rubric matrices feature qualitative descriptors across all scoring tiers (Exemplary, Proficient, Developing, Inadequate) rather than just numbers.',
-        benchmark: 'Students understand exactly what constitutes excellence versus mediocrity before attempting the task.'
-      },
-      {
-        criterion: 'Authentic & Problem-Based Learning',
-        description: 'Coursework tasks present authentic, real-world scenario challenges that test application, creativity, and critical judgment.',
-        benchmark: 'High engagement projects that stimulate professional competence.'
+        criterion: 'Descriptive Rubric Quality & Authentic Tasks',
+        description: 'Rubrics communicate clear performance standards so students understand criteria before submission.',
+        benchmark: 'Thorough descriptive matrices mapped directly to target CLOs.'
       }
     ]
   },
   {
     id: '12',
     code: 'Folder 12',
-    title: 'Samples of Student Coursework (3 High, 3 Mid, 3 Low)',
-    driveFolderName: '12 Samples of Student Coursework',
+    title: 'Samples of Students Work',
+    driveFolderName: '12 SAMPLES OF STUDENTS WORK',
     pillarId: 'marking',
-    essentialKeywords: ['coursework samples', 'student work', '3 high 3 mid 3 low', 'graded projects', 'submission samples'],
+    essentialKeywords: ['samples of students work', 'student coursework samples', 'student work', 'high mid low coursework', '12'],
     complianceCriteria: [
-      'Representative student submissions (3 High, 3 Mid, 3 Low) for EVERY major coursework component.',
-      'Identified with student matric number and score awarded.'
+      'Representative student work samples (3 High, 3 Mid, 3 Low scores) for every major project/coursework.',
+      'Marked with student identifier and corresponding rubric grading sheets.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Constructive Formative Feedback (Feed-Forward)',
-        description: 'Lecturer provides meaningful qualitative annotations, margin notes, critiques, and actionable guidance directly on student work.',
-        benchmark: 'Work includes personalized guidance on strengths and specific areas to refine, not just a bare grade.'
-      },
-      {
-        criterion: 'Rubric Score Calibration',
-        description: 'Marks awarded on the sample work strictly match the published rubric matrix performance criteria.',
-        benchmark: 'Traceable alignment between qualitative student output and rubric score bands.'
+        criterion: 'Actionable Formative Feedback (Feed-Forward)',
+        description: 'Direct qualitative annotations, pin-up jury comments, and constructive critiques identifying strengths and remediation areas.',
+        benchmark: 'Demonstrated feed-forward remarks fostering student creative and technical growth.'
       }
     ]
   },
@@ -385,18 +365,18 @@ export const TEACHING_FILE_ITEMS = [
     id: '13',
     code: 'Folder 13',
     title: 'Miscellaneous Records',
-    driveFolderName: '13 Miscellaneous Records',
+    driveFolderName: '13 MISCELLANEOUS RECORDS',
     pillarId: 'governance',
-    essentialKeywords: ['miscellaneous', 'mc', 'medical certificate', 'exemption', 'add drop', 'permits', 'correspondence'],
+    essentialKeywords: ['miscellaneous', 'miscellaneous records', 'mc', 'medical certificate', 'deferment', 'correspondence', '13'],
     complianceCriteria: [
-      'Records of special circumstances, medical certificates, deferment letters, or formal academic correspondence.',
-      'If no special cases occurred, a signed declaration statement confirming "Nil records" is provided.'
+      'Records of student special approvals, medical certificates (MC), deferments, or academic correspondence.',
+      'If no special incidents occurred during the semester, a brief "Nil Records" confirmation is filed.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Fairness & Compliance with University Regulations',
-        description: 'Proper procedural handling of student exemptions, makeup assessments, or approved deadline extensions.',
-        benchmark: 'Documented approvals ensuring equity and compliance with academic senate bylaws.'
+        criterion: 'Procedural Fairness & Academic Governance',
+        description: 'Equitable administration of student makeup requests and regulatory compliance.',
+        benchmark: 'Documented transparency for any special student arrangements.'
       }
     ]
   }

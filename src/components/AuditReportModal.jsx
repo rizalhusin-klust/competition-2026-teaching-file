@@ -58,7 +58,7 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
                 type="button"
                 className="btn btn-secondary btn-sm"
                 onClick={onOpenExportHtml}
-                title="Save all 13 folders, links, and reports into a single standalone .html file"
+                title="Save all 14 folders, links, and reports into a single standalone .html file"
               >
                 <FileCode size={15} style={{ color: 'var(--primary)' }} /> Save Single HTML
               </button>
@@ -165,7 +165,7 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
               <div style={{ border: '2px solid var(--primary)', borderRadius: 'var(--radius-md)', padding: '1rem', textAlign: 'center' }}>
                 <div style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Submission Compliance</div>
                 <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--primary)' }}>{metrics.complianceRate ?? 0}%</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--primary)' }}>{metrics.submittedFolderCount ?? metrics.submittedFolders ?? 0} of 13 Folders</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--primary)' }}>{metrics.submittedFolderCount ?? metrics.submittedFolders ?? 0} of {metrics.totalFolderCount || (course.isCourseworkOnly ? 12 : 14)} Folders</div>
               </div>
 
               <div style={{ border: '2px solid #8b5cf6', borderRadius: 'var(--radius-md)', padding: '1rem', textAlign: 'center' }}>
@@ -236,10 +236,10 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
             </table>
           </div>
 
-          {/* Section 4: 13-Folder Detailed Findings */}
+          {/* Section 4: 14-Folder Detailed Findings */}
           <div style={{ marginBottom: '1.75rem' }}>
             <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-main)', borderBottom: '1px solid var(--border)', paddingBottom: '0.4rem', marginBottom: '0.85rem' }}>
-              3. Teaching File Portfolio Audit Breakdown (Folders 01 to 13)
+              3. Teaching File Portfolio Audit Breakdown (Folders 00 to 13)
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>

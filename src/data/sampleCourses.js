@@ -67,6 +67,21 @@ export const SAMPLE_COURSES = [
       gradeDistribution: { 'A': 8, 'B': 16, 'C': 6, 'D/F': 2 }
     },
     folderAudits: {
+      '00': {
+        submitted: true,
+        fileCount: 1,
+        files: [
+          { name: 'ARC3126_Teaching_File_Cover_Page_Signed.pdf', size: '420 KB', updated: '2026-09-01', driveLink: 'https://drive.google.com' }
+        ],
+        qualityScore: 5,
+        qualityTier: 'Exemplary',
+        findings: [
+          'Official faculty teaching file cover page completed with course parameters and signed by Head of Department.',
+          'Course code ARC 3126, semester session, and credit hours verified.'
+        ],
+        risks: [],
+        auditorNotes: 'Institutional cover page complete and properly endorsed.'
+      },
       '01': {
         submitted: true,
         fileCount: 3,
@@ -347,7 +362,7 @@ export const SAMPLE_COURSES = [
     headOfDepartment: 'Assoc. Prof. Dr. Shamsul bin Sahibuddin (Head of Computing)',
     auditStatus: 'Pending Minor Rectification (Action Plan Required)',
     overallQualityIndex: 68, // 68% Satisfactory (Needs attention)
-    complianceRate: 92.3, // 12 of 13 folders submitted (Folder 10 pending)
+    complianceRate: 92.9, // 13 of 14 folders submitted (Folder 10 pending)
     clos: [
       {
         id: 'clo1',
@@ -399,6 +414,21 @@ export const SAMPLE_COURSES = [
       gradeDistribution: { 'A': 6, 'B': 20, 'C': 12, 'D/F': 7 }
     },
     folderAudits: {
+      '00': {
+        submitted: true,
+        fileCount: 1,
+        files: [
+          { name: 'CSE2104_Cover_Page_2026.pdf', size: '380 KB', updated: '2026-09-01', driveLink: 'https://drive.google.com' }
+        ],
+        qualityScore: 4,
+        qualityTier: 'Commendable',
+        findings: [
+          'Official teaching file cover page completed with course details.',
+          'Signed by course lecturer; awaiting HOD endorsement stamp.'
+        ],
+        risks: [],
+        auditorNotes: 'Cover page uploaded. HOD counter-signature required.'
+      },
       '01': {
         submitted: true,
         fileCount: 2,

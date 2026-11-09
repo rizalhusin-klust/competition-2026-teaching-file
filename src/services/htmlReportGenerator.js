@@ -428,7 +428,7 @@ export function generateStandaloneHtmlContent(course, role = 'auditor', logoData
       <div class="verdict-card" style="border-color: #0284c7;">
         <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Submission Compliance</div>
         <div class="verdict-metric" style="color: #0284c7;">${metrics.complianceRate ?? 0}%</div>
-        <div style="font-size: 0.85rem; font-weight: 700; color: #0284c7;">${metrics.submittedFolderCount ?? metrics.submittedFolders ?? 0} / 13 Folders Filed</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #0284c7;">${metrics.submittedFolderCount ?? metrics.submittedFolders ?? 0} / ${metrics.totalFolderCount || (course.isCourseworkOnly ? 12 : 14)} Folders Filed</div>
       </div>
 
       <div class="verdict-card" style="border-color: #059669;">
@@ -500,9 +500,9 @@ export function generateStandaloneHtmlContent(course, role = 'auditor', logoData
       </tbody>
     </table>
 
-    <!-- Section 4: All 13 Teaching File Folders with Links -->
+    <!-- Section 4: All 14 Teaching File Folders with Links -->
     <div class="section-title">
-      <span>3. Complete 13 Teaching File Folders & Document Links</span>
+      <span>3. Standardized Teaching File Folders & Document Links (00 to 13)</span>
       ${course.driveFolderUrl ? `<a href="${course.driveFolderUrl}" target="_blank" class="drive-link">Main Drive Folder ↗</a>` : ''}
     </div>
 

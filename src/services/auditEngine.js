@@ -13,7 +13,7 @@ export function calculateAuditMetrics(course) {
       qualityTier: QUALITY_TIERS[3],
       submittedFolderCount: 0,
       submittedFolders: 0,
-      totalFolderCount: 13,
+      totalFolderCount: 14,
       criticalRisksCount: 0,
       totalRisks: 0,
       activeCarsCount: 0
@@ -87,7 +87,7 @@ export function calculateAuditMetrics(course) {
     totalWeightSum += pillar.weight;
   }
 
-  const applicableFolderCount = is100PercentCoursework ? 11 : TEACHING_FILE_ITEMS.length;
+  const applicableFolderCount = is100PercentCoursework ? (TEACHING_FILE_ITEMS.length - 2) : TEACHING_FILE_ITEMS.length;
   const overallQualityIndex = Math.round(weightedIndexSum / (totalWeightSum || 100));
   const complianceRate = Math.round((submittedCount / (applicableFolderCount || 1)) * 100);
 
@@ -95,7 +95,7 @@ export function calculateAuditMetrics(course) {
   const tier = QUALITY_TIERS.find(t => overallQualityIndex >= t.minScore) || QUALITY_TIERS[QUALITY_TIERS.length - 1];
 
   const activeCarsCount = (course.correctiveActions || []).filter(c => c.status !== 'Closed').length;
-  const avgQualityScore = Number((totalScoreSum / (applicableFolderCount || 11)).toFixed(1));
+  const avgQualityScore = Number((totalScoreSum / (applicableFolderCount || 12)).toFixed(1));
 
   return {
     overallQualityIndex,
@@ -117,10 +117,11 @@ export function calculateAuditMetrics(course) {
  * Generate an executive audit summary paragraph
  */
 export function generateExecutiveSummary(course, metrics) {
-  const { overallQualityIndex, complianceRate, qualityTier, submittedFolderCount } = metrics;
+  const { overallQualityIndex, complianceRate, qualityTier, submittedFolderCount, is100PercentCoursework } = metrics;
   
   let text = `The internal teaching file audit for ${course.code} (${course.name}), taught by ${course.lecturer} for ${course.semester}, has been conducted. `;
-  text += `Submission compliance is currently at ${complianceRate}% (${submittedFolderCount} of 13 folders submitted). `;
+  const applicableTotal = is100PercentCoursework ? 12 : 14;
+  text += `Submission compliance is currently at ${complianceRate}% (${submittedFolderCount} of ${applicableTotal} folders submitted). `;
   text += `The overall Teaching & Learning Quality Index is evaluated at ${overallQualityIndex}%, placing the portfolio under ${qualityTier.badge}. `;
 
   if (overallQualityIndex >= 85) {

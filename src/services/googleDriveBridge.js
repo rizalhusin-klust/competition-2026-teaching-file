@@ -42,19 +42,20 @@ export const GOOGLE_APPS_SCRIPT_TEMPLATE = `/**
  */
 
 var TEACHING_FOLDERS = [
-  "01 Course Syllabus & Course Outline",
-  "02 Time Table",
-  "03 Continuous Assessment Plan",
-  "04 List of References",
-  "05 Student Attendance List",
-  "06 Student Course Evaluation Report",
-  "07 Report by Lecturer",
-  "08 Teaching Materials",
-  "09 Moderated Final Exam with Marking Scheme",
-  "10 Final Exam Scripts (3 higher, 3 lower, and 3 middle scores)",
-  "11 Coursework with Marking Schemes",
-  "12 Samples of Student Coursework (3 high, 3 mid, 3 low)",
-  "13 Miscellaneous Records"
+  "00 TEACHING FILE COVER PAGE",
+  "01 DETAILS OF STUDENTS' RESULTS",
+  "02 OBE ASSESSMENT",
+  "03 COURSE SYLLABUS",
+  "04 TEACHING PLAN",
+  "05 TIME TABLE OF LECTURER",
+  "06 STUDENT MONTHLY ATTENDANCE",
+  "07 REPORT BY LECTURER",
+  "08 TEACHING MATERIALS",
+  "09 MODERATE FINAL EXAM WITH MARKING SCHEME",
+  "10 FINAL EXAM SCRIPTS",
+  "11 COURSEWORK WITH MARKING SCHEME",
+  "12 SAMPLES OF STUDENTS WORK",
+  "13 MISCELLANEOUS RECORDS"
 ];
 
 function doPost(e) {

@@ -112,9 +112,9 @@ export default function GoogleDriveSyncModal({ isOpen, onClose, course }) {
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem', marginTop: '0.75rem' }}>
               <div style={{ background: '#ffffff', padding: '0.85rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                <div style={{ fontWeight: 700, fontSize: '0.84rem', color: 'var(--primary)' }}>Step 1: Standardized 13 Folders</div>
+                <div style={{ fontWeight: 700, fontSize: '0.84rem', color: 'var(--primary)' }}>Step 1: Standardized 14 Folders (00 to 13)</div>
                 <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                  Each course has 13 subfolders (01 Course Syllabus to 13 Miscellaneous) in Google Drive.
+                  Each course has 14 subfolders (00 Teaching File Cover Page to 13 Miscellaneous) in Google Drive.
                 </p>
               </div>
 
@@ -142,7 +142,7 @@ export default function GoogleDriveSyncModal({ isOpen, onClose, course }) {
                   Automated Google Drive & Google Sheets Script (Optional Setup)
                 </h4>
                 <p style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>
-                  You can paste this script in your Google Sheets Apps Script to automatically build the 13 folders and log audit verdicts!
+                  You can paste this script in your Google Sheets Apps Script to automatically build the 14 folders and log audit verdicts!
                 </p>
               </div>
 

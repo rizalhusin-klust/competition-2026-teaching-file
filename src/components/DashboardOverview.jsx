@@ -221,14 +221,14 @@ export default function DashboardOverview({
                 STEP 1 • EVIDENCE
               </span>
               <span className={`badge ${metrics.complianceRate === 100 ? 'badge-success' : 'badge-primary'}`} style={{ fontSize: '0.66rem' }}>
-                {metrics.submittedFolderCount} / 13 Folders
+                {metrics.submittedFolderCount} / {metrics.totalFolderCount || (course.isCourseworkOnly ? 12 : 14)} Folders
               </span>
             </div>
             <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a', marginTop: '0.3rem' }}>
-              Folders 01 to 13
+              Folders 00 to 13
             </div>
             <p style={{ fontSize: '0.74rem', color: '#475569', margin: '0.2rem 0 0 0' }}>
-              Upload and verify documents across all 13 checklist slots.
+              Upload and verify documents across all 14 standardized folder slots.
             </p>
           </div>
 
@@ -468,7 +468,7 @@ export default function DashboardOverview({
               {metrics.complianceRate}% Submission Rate
             </div>
             <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
-              Verifies if folder slots (01 to 13) contain PDF files. Passing this only proves bureaucratic completeness, not educational quality.
+              Verifies if folder slots (00 to 13) contain PDF files. Passing this only proves bureaucratic completeness, not educational quality.
             </p>
           </div>
 
@@ -608,12 +608,12 @@ export default function DashboardOverview({
         </div>
       </div>
 
-      {/* Quick Access to the 13 Folders */}
+      {/* Quick Access to the 14 Folders */}
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
           <div>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-main)' }}>
-              Teaching File Folders Status (01 to 13)
+              Teaching File Folders Status (00 to 13)
             </h2>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
               Click any folder below to inspect uploaded documents, quality scores, and auditor remarks.
