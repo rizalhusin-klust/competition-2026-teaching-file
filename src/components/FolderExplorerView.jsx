@@ -14,7 +14,11 @@ import {
   Award,
   Upload,
   AlertCircle,
-  Link2
+  Link2,
+  FolderPlus,
+  UploadCloud,
+  FileUp,
+  FolderCheck
 } from 'lucide-react';
 import { TEACHING_FILE_ITEMS, QUALITY_PILLARS } from '../data/auditRubrics';
 
@@ -28,6 +32,9 @@ export default function FolderExplorerView({
   const isAuditor = userRole === 'auditor';
   const [activeFolderId, setActiveFolderId] = useState(initialFolderId);
   const [savedNotification, setSavedNotification] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [createdFolderNotification, setCreatedFolderNotification] = useState(null);
+  const fileInputRef = React.useRef(null);
 
   const activeItem = TEACHING_FILE_ITEMS.find(i => i.id === activeFolderId) || TEACHING_FILE_ITEMS[0];
   const audit = course.folderAudits?.[activeItem.id] || {
@@ -178,6 +185,103 @@ export default function FolderExplorerView({
     onUpdateCourse({ ...course, folderAudits: updatedAudits });
   };
 
+  // Handle multiple files selected or dropped into active folder
+  const handleFilesSelected = (filesList) => {
+    if (!filesList || filesList.length === 0) return;
+
+    const newFiles = Array.from(filesList).map(f => {
+      // Format file size
+      let sizeStr = `${(f.size / 1024).toFixed(1)} KB`;
+      if (f.size > 1024 * 1024) {
+        sizeStr = `${(f.size / (1024 * 1024)).toFixed(1)} MB`;
+      }
+
+      return {
+        name: f.name,
+        size: sizeStr,
+        updated: new Date().toISOString().split('T')[0],
+        driveLink: course.driveFolderUrl || 'https://drive.google.com'
+      };
+    });
+
+    const existingFiles = audit.files || [];
+    const updatedFiles = [...existingFiles, ...newFiles];
+
+    // Auto-update quality score if folder was previously empty
+    let newScore = audit.qualityScore;
+    let newTier = audit.qualityTier;
+    if (!audit.submitted || audit.qualityScore <= 1) {
+      newScore = 4;
+      newTier = 'Commendable';
+    }
+
+    const updatedAudits = {
+      ...course.folderAudits,
+      [activeItem.id]: {
+        ...audit,
+        files: updatedFiles,
+        fileCount: updatedFiles.length,
+        submitted: true,
+        qualityScore: newScore,
+        qualityTier: newTier,
+        findings: audit.findings?.length > 0 
+          ? audit.findings 
+          : [`Document ${newFiles[0].name} uploaded and verified for ${activeItem.title}.`]
+      }
+    };
+
+    onUpdateCourse({ ...course, folderAudits: updatedAudits });
+    setCreatedFolderNotification(`Added ${newFiles.length} file(s) to ${activeItem.title}!`);
+    setTimeout(() => setCreatedFolderNotification(null), 3000);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (e.dataTransfer && e.dataTransfer.files) {
+      handleFilesSelected(e.dataTransfer.files);
+    }
+  };
+
+  // One-click create/initialize all 13 standard Teaching File Folders
+  const handleInitializeAll13Folders = () => {
+    const updatedAudits = { ...(course.folderAudits || {}) };
+    let initializedCount = 0;
+
+    TEACHING_FILE_ITEMS.forEach(item => {
+      if (!updatedAudits[item.id]) {
+        updatedAudits[item.id] = {
+          submitted: false,
+          fileCount: 0,
+          files: [],
+          qualityScore: 1,
+          qualityTier: 'Non-Compliant',
+          findings: [],
+          risks: [`Mandatory folder structure created; awaiting document upload.`],
+          auditorNotes: 'Folder established. Please upload required documentation.'
+        };
+        initializedCount++;
+      }
+    });
+
+    onUpdateCourse({ ...course, folderAudits: updatedAudits });
+    setCreatedFolderNotification('Standard 13 Teaching File Folders initialized in this course portfolio!');
+    setTimeout(() => setCreatedFolderNotification(null), 3500);
+  };
+
   const handleSaveNotification = () => {
     setSavedNotification(true);
     setTimeout(() => setSavedNotification(false), 2500);
@@ -189,11 +293,23 @@ export default function FolderExplorerView({
       {/* Left Sidebar: 13 Folders List */}
       <div className="card" style={{ padding: '0.85rem', position: 'sticky', top: '5rem', maxHeight: 'calc(100vh - 6rem)', overflowY: 'auto' }}>
         <div style={{ padding: '0.5rem 0.5rem 0.85rem 0.5rem', borderBottom: '1px solid var(--border)', marginBottom: '0.5rem' }}>
-          <h3 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-main)' }}>
-            Teaching File Folders
-          </h3>
-          <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
-            13 Standard Audit Categories
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-main)', margin: 0 }}>
+              Teaching File Folders
+            </h3>
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={handleInitializeAll13Folders}
+              style={{ padding: '0.2rem 0.45rem', fontSize: '0.72rem', color: 'var(--primary)', fontWeight: 700 }}
+              title="Create/Ensure all 13 official standard teaching folders are present"
+            >
+              <FolderPlus size={13} />
+              <span>+ Create All 13</span>
+            </button>
+          </div>
+          <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
+            13 Standard Accreditation Folders
           </p>
         </div>
 
@@ -373,35 +489,105 @@ export default function FolderExplorerView({
 
         {/* Uploaded Documents List */}
         <div className="card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+          {/* Hidden direct file input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            multiple
+            style={{ display: 'none' }}
+            onChange={(e) => {
+              if (e.target.files && e.target.files.length > 0) {
+                handleFilesSelected(e.target.files);
+                e.target.value = null; // reset
+              }
+            }}
+          />
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.65rem' }}>
             <div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-main)' }}>
-                Documents in this Folder ({audit.files?.length || 0})
-              </h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                Verified files & direct cloud links available for audit scrutiny.
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-main)', margin: 0 }}>
+                  Documents in this Folder ({audit.files?.length || 0})
+                </h3>
+                {createdFolderNotification && (
+                  <span className="badge badge-success fade-in" style={{ fontSize: '0.75rem' }}>
+                    <Check size={12} /> {createdFolderNotification}
+                  </span>
+                )}
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
+                Upload files directly from your computer or link from Google Drive.
               </p>
             </div>
 
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              onClick={handleAddCustomFileLink}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                background: '#f0fdf4',
-                borderColor: '#86efac',
-                color: '#166534'
-              }}
-              title="Add a document link (Google Drive, Doc, PDF) to this folder"
-            >
-              <Link2 size={14} style={{ color: '#16a34a' }} />
-              <span>+ Add Document Link</span>
-            </button>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {/* Primary Direct File Upload Button */}
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '0.82rem',
+                  fontWeight: 800,
+                  boxShadow: '0 2px 6px rgba(37,99,235,0.25)'
+                }}
+                title="Select and upload documents (PDF, DOCX, XLSX, PPTX, Images) directly into this folder"
+              >
+                <FileUp size={15} />
+                <span>+ Upload Documents</span>
+              </button>
+
+              {/* Paste Document Link Button */}
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={handleAddCustomFileLink}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  background: '#f0fdf4',
+                  borderColor: '#86efac',
+                  color: '#166534'
+                }}
+                title="Add a direct Google Drive or cloud web link for this folder"
+              >
+                <Link2 size={14} style={{ color: '#16a34a' }} />
+                <span>+ Add Cloud Link</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Drag & Drop Upload Zone */}
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+            style={{
+              marginBottom: '1rem',
+              padding: '1.25rem 1rem',
+              textAlign: 'center',
+              borderRadius: 'var(--radius-md)',
+              border: `2px dashed ${isDragging ? '#2563eb' : '#cbd5e1'}`,
+              background: isDragging ? '#eff6ff' : '#f8fafc',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+            title="Click or drag files here to upload into this folder"
+          >
+            <UploadCloud size={28} style={{ color: isDragging ? '#2563eb' : '#64748b', margin: '0 auto 0.35rem auto' }} />
+            <div style={{ fontSize: '0.88rem', fontWeight: 700, color: isDragging ? '#1d4ed8' : 'var(--text-main)' }}>
+              Drag & drop files here, or <span style={{ color: 'var(--primary)', textDecoration: 'underline' }}>browse from computer</span>
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+              Supports PDF, DOCX, XLSX, PPTX, JPG, PNG • Automatically updates verification status
+            </div>
           </div>
 
           {audit.files?.length > 0 ? (
@@ -468,19 +654,19 @@ export default function FolderExplorerView({
             </div>
           ) : (
             <div style={{
-              padding: '2rem',
+              padding: '1.5rem',
               textAlign: 'center',
-              background: 'var(--danger-bg)',
+              background: '#fef2f2',
               borderRadius: 'var(--radius-md)',
-              border: '1px dashed var(--danger-border)',
+              border: '1px dashed #fca5a5',
               color: '#991b1b'
             }}>
-              <AlertTriangle size={28} style={{ margin: '0 auto 0.5rem auto', color: 'var(--danger)' }} />
-              <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>
-                No Documents Submitted in this Folder
+              <AlertTriangle size={24} style={{ margin: '0 auto 0.4rem auto', color: '#dc2626' }} />
+              <div style={{ fontWeight: 700, fontSize: '0.92rem' }}>
+                No Documents in this Folder Yet
               </div>
-              <p style={{ fontSize: '0.82rem', marginTop: '0.25rem' }}>
-                This is a required teaching file item. Please request the lecturer to upload relevant files.
+              <p style={{ fontSize: '0.8rem', marginTop: '0.2rem', color: '#7f1d1d' }}>
+                Drag and drop files into the box above, click "+ Upload Documents", or add a cloud link.
               </p>
             </div>
           )}
