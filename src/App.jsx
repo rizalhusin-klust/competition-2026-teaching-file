@@ -10,6 +10,7 @@ import AuditReportModal from './components/AuditReportModal';
 import EditCourseModal from './components/EditCourseModal';
 import AISettingsModal from './components/AISettingsModal';
 import AIEvaluationModal from './components/AIEvaluationModal';
+import StandaloneHtmlExportModal from './components/StandaloneHtmlExportModal';
 import { 
   getStoredCourses, 
   getActiveCourseId, 
@@ -48,6 +49,7 @@ export default function App() {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isEditCourseOpen, setIsEditCourseOpen] = useState(false);
   const [isAISettingsOpen, setIsAISettingsOpen] = useState(false);
+  const [isExportHtmlOpen, setIsExportHtmlOpen] = useState(false);
   const [aiEvalState, setAiEvalState] = useState({ isOpen: false, folder: null });
 
   // Active course reference
@@ -127,6 +129,7 @@ export default function App() {
         onOpenReport={() => setIsReportOpen(true)}
         onResetSamples={handleResetSamples}
         onOpenEditCourse={() => setIsEditCourseOpen(true)}
+        onOpenExportHtml={() => setIsExportHtmlOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -183,6 +186,7 @@ export default function App() {
             onOpenEditCourse={() => setIsEditCourseOpen(true)}
             onOpenAIReview={handleOpenAIReview}
             onOpenAISettings={() => setIsAISettingsOpen(true)}
+            onOpenExportHtml={() => setIsExportHtmlOpen(true)}
           />
         )}
 
@@ -231,6 +235,14 @@ export default function App() {
         course={activeCourse}
         userRole={userRole}
         aiConfig={aiConfig}
+        onOpenExportHtml={() => setIsExportHtmlOpen(true)}
+      />
+
+      <StandaloneHtmlExportModal
+        isOpen={isExportHtmlOpen}
+        onClose={() => setIsExportHtmlOpen(false)}
+        course={activeCourse}
+        userRole={userRole}
       />
 
       <EditCourseModal

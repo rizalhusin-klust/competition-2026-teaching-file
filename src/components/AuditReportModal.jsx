@@ -10,13 +10,14 @@ import {
   ShieldCheck,
   Calendar,
   User,
-  Building
+  Building,
+  FileCode
 } from 'lucide-react';
 import { TEACHING_FILE_ITEMS, QUALITY_PILLARS } from '../data/auditRubrics';
 import { calculateAuditMetrics, generateExecutiveSummary } from '../services/auditEngine';
 import klustLogo from '../assets/klust-logo.jpg';
 
-export default function AuditReportModal({ isOpen, onClose, course, userRole = 'auditor', aiConfig }) {
+export default function AuditReportModal({ isOpen, onClose, course, userRole = 'auditor', aiConfig, onOpenExportHtml }) {
   if (!isOpen || !course) return null;
 
   const isAuditor = userRole === 'auditor';
@@ -46,6 +47,16 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {onOpenExportHtml && (
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={onOpenExportHtml}
+                title="Save all 13 folders, links, and reports into a single standalone .html file"
+              >
+                <FileCode size={15} style={{ color: 'var(--primary)' }} /> Save Single HTML
+              </button>
+            )}
             <button
               type="button"
               className="btn btn-primary btn-sm"

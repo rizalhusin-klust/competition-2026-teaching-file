@@ -11,7 +11,8 @@ import {
   UserCheck,
   Sparkles,
   GraduationCap,
-  Sliders
+  Sliders,
+  FileCode
 } from 'lucide-react';
 import klustLogo from '../assets/klust-logo.jpg';
 
@@ -27,7 +28,8 @@ export default function Navbar({
   onOpenDriveModal,
   onOpenReport,
   onResetSamples,
-  onOpenEditCourse
+  onOpenEditCourse,
+  onOpenExportHtml
 }) {
   const isAuditor = userRole === 'auditor';
   const hasCustomKey = Boolean(aiConfig?.apiKey);
@@ -124,11 +126,11 @@ export default function Navbar({
                   EduAudit <span style={{ color: 'var(--primary)' }}>Pro</span>
                 </span>
                 <span className="badge badge-primary" style={{ fontSize: '0.66rem', padding: '0.12rem 0.45rem' }}>
-                  v2.0 AI Edition
+                  v2.1 HTML Dossier
                 </span>
               </div>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                Session 2026/2027 • Dual Persona
+                Session 2026/2027 • Portable Archive
               </div>
             </div>
           </div>
@@ -301,6 +303,17 @@ export default function Navbar({
             >
               <Printer size={14} />
               <span>{isAuditor ? 'Audit Report' : 'Self-Check Report'}</span>
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={onOpenExportHtml}
+              style={{ background: 'rgba(30,64,175,0.06)', borderColor: 'rgba(30,64,175,0.25)', color: '#1e40af', fontWeight: 700 }}
+              title="Save all 13 folders, links, and audit report in a single standalone .html file"
+            >
+              <FileCode size={14} />
+              <span>Single HTML Dossier</span>
             </button>
 
             <button

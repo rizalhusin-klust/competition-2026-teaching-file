@@ -18,7 +18,8 @@ import {
   ShieldCheck,
   Sparkles,
   Building,
-  GraduationCap
+  GraduationCap,
+  FileCode
 } from 'lucide-react';
 import { QUALITY_PILLARS, TEACHING_FILE_ITEMS } from '../data/auditRubrics';
 import { calculateAuditMetrics, generateExecutiveSummary } from '../services/auditEngine';
@@ -32,7 +33,8 @@ export default function DashboardOverview({
   onSelectFolder,
   onOpenEditCourse,
   onOpenAIReview,
-  onOpenAISettings
+  onOpenAISettings,
+  onOpenExportHtml
 }) {
   if (!course) return null;
 
@@ -178,6 +180,17 @@ export default function DashboardOverview({
             >
               <FileText size={14} />
               <span>{isAuditor ? 'Generate Audit Report' : 'Preview Self-Check Report'}</span>
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={onOpenExportHtml}
+              style={{ background: 'rgba(59,130,246,0.25)', color: '#ffffff', borderColor: 'rgba(147,197,253,0.4)', fontWeight: 700 }}
+              title="Save all 13 folders, links, and audit report in a single standalone .html file"
+            >
+              <FileCode size={14} />
+              <span>Save Single HTML</span>
             </button>
           </div>
         </div>
