@@ -8,6 +8,8 @@ import UploadFolderModal from './components/UploadFolderModal';
 import GoogleDriveSyncModal from './components/GoogleDriveSyncModal';
 import AuditReportModal from './components/AuditReportModal';
 import EditCourseModal from './components/EditCourseModal';
+import AISettingsModal from './components/AISettingsModal';
+import AIEvaluationModal from './components/AIEvaluationModal';
 import { 
   getStoredCourses, 
   getActiveCourseId, 
@@ -15,6 +17,12 @@ import {
   updateCourseInStore, 
   resetToSampleCourses 
 } from './services/storage';
+import { 
+  getStoredUserRole, 
+  setStoredUserRole, 
+  getStoredAIConfig, 
+  saveStoredAIConfig 
+} from './services/aiService';
 import { 
   LayoutDashboard, 
   FolderCheck, 
@@ -28,11 +36,19 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'folders' | 'pillars' | 'alignment'
   const [selectedFolderId, setSelectedFolderId] = useState('01');
 
+  // Dual Role Perspective: 'auditor' | 'lecturer'
+  const [userRole, setUserRole] = useState(() => getStoredUserRole());
+
+  // Bring-Your-Own-AI Configuration
+  const [aiConfig, setAiConfig] = useState(() => getStoredAIConfig());
+
   // Modals state
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isDriveModalOpen, setIsDriveModalOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isEditCourseOpen, setIsEditCourseOpen] = useState(false);
+  const [isAISettingsOpen, setIsAISettingsOpen] = useState(false);
+  const [aiEvalState, setAiEvalState] = useState({ isOpen: false, folder: null });
 
   // Active course reference
   const activeCourse = courses.find(c => c.id === activeCourseId) || courses[0];
@@ -40,6 +56,11 @@ export default function App() {
   const handleSelectCourse = (courseId) => {
     setActiveCourseIdState(courseId);
     setActiveCourseId(courseId);
+  };
+
+  const handleToggleUserRole = (newRole) => {
+    setUserRole(newRole);
+    setStoredUserRole(newRole);
   };
 
   const handleUpdateCourse = (updatedCourse) => {
@@ -64,6 +85,32 @@ export default function App() {
     }
   };
 
+  const handleOpenAIReview = (folder) => {
+    setAiEvalState({
+      isOpen: true,
+      folder: folder || { id: '01', title: 'Course Information & Approved Syllabus' }
+    });
+  };
+
+  const handleApplyRemarks = (folderId, remarksText) => {
+    const existingAudit = activeCourse.folderAudits?.[folderId] || {};
+    const updatedNotes = existingAudit.auditorNotes 
+      ? `${existingAudit.auditorNotes}\n\n--- [AI Quality Insights (${userRole.toUpperCase()})] ---\n${remarksText}`
+      : remarksText;
+    
+    const updatedCourse = {
+      ...activeCourse,
+      folderAudits: {
+        ...activeCourse.folderAudits,
+        [folderId]: {
+          ...existingAudit,
+          auditorNotes: updatedNotes
+        }
+      }
+    };
+    handleUpdateCourse(updatedCourse);
+  };
+
   return (
     <div className="app-container">
       {/* Top Navbar */}
@@ -71,6 +118,10 @@ export default function App() {
         courses={courses}
         activeCourse={activeCourse}
         onSelectCourse={handleSelectCourse}
+        userRole={userRole}
+        onToggleUserRole={handleToggleUserRole}
+        aiConfig={aiConfig}
+        onOpenAISettings={() => setIsAISettingsOpen(true)}
         onOpenUpload={() => setIsUploadOpen(true)}
         onOpenDriveModal={() => setIsDriveModalOpen(true)}
         onOpenReport={() => setIsReportOpen(true)}
@@ -124,18 +175,24 @@ export default function App() {
         {activeTab === 'overview' && (
           <DashboardOverview
             course={activeCourse}
+            userRole={userRole}
+            onToggleUserRole={handleToggleUserRole}
             onNavigateTab={setActiveTab}
             onOpenReport={() => setIsReportOpen(true)}
             onSelectFolder={setSelectedFolderId}
             onOpenEditCourse={() => setIsEditCourseOpen(true)}
+            onOpenAIReview={handleOpenAIReview}
+            onOpenAISettings={() => setIsAISettingsOpen(true)}
           />
         )}
 
         {activeTab === 'folders' && (
           <FolderExplorerView
             course={activeCourse}
+            userRole={userRole}
             onUpdateCourse={handleUpdateCourse}
             initialFolderId={selectedFolderId}
+            onOpenAIReview={handleOpenAIReview}
           />
         )}
 
@@ -172,14 +229,37 @@ export default function App() {
         isOpen={isReportOpen}
         onClose={() => setIsReportOpen(false)}
         course={activeCourse}
+        userRole={userRole}
+        aiConfig={aiConfig}
       />
 
       <EditCourseModal
         isOpen={isEditCourseOpen}
         onClose={() => setIsEditCourseOpen(false)}
         course={activeCourse}
-        onSaveCourse={handleUpdateCourse}
+        onSave={handleUpdateCourse}
       />
+
+      <AISettingsModal
+        isOpen={isAISettingsOpen}
+        onClose={() => setIsAISettingsOpen(false)}
+        onConfigSaved={(newConfig) => setAiConfig(newConfig)}
+      />
+
+      <AIEvaluationModal
+        isOpen={aiEvalState.isOpen}
+        onClose={() => setAiEvalState({ isOpen: false, folder: null })}
+        folder={aiEvalState.folder}
+        course={activeCourse}
+        role={userRole}
+        aiConfig={aiConfig}
+        onOpenAISettings={() => {
+          setAiEvalState({ isOpen: false, folder: null });
+          setIsAISettingsOpen(true);
+        }}
+        onApplyRemarks={handleApplyRemarks}
+      />
+
     </div>
   );
 }

@@ -16,9 +16,10 @@ import { TEACHING_FILE_ITEMS, QUALITY_PILLARS } from '../data/auditRubrics';
 import { calculateAuditMetrics, generateExecutiveSummary } from '../services/auditEngine';
 import klustLogo from '../assets/klust-logo.jpg';
 
-export default function AuditReportModal({ isOpen, onClose, course }) {
+export default function AuditReportModal({ isOpen, onClose, course, userRole = 'auditor', aiConfig }) {
   if (!isOpen || !course) return null;
 
+  const isAuditor = userRole === 'auditor';
   const metrics = calculateAuditMetrics(course);
   const summaryText = generateExecutiveSummary(course, metrics);
 
@@ -35,10 +36,12 @@ export default function AuditReportModal({ isOpen, onClose, course }) {
           <div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <FileText size={22} style={{ color: 'var(--primary)' }} />
-              Formal Teaching & Learning Quality Audit Report
+              {isAuditor ? 'Formal Teaching & Learning Quality Audit Report' : 'Lecturer Pre-Audit Readiness & Self-Check Report'}
             </h3>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Accreditation-compliant internal audit documentation ready for print and faculty submission.
+              {isAuditor
+                ? 'Accreditation-compliant internal audit documentation ready for print and faculty submission.'
+                : 'Self-assessment and pre-flight quality documentation ready for review before HOD submission.'}
             </p>
           </div>
 
@@ -87,10 +90,12 @@ export default function AuditReportModal({ isOpen, onClose, course }) {
                 CENTRE FOR ACADEMIC QUALITY ASSURANCE & ACCREDITATION
               </div>
               <h1 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#0f172a', margin: '0.25rem 0 0.15rem 0', letterSpacing: '-0.01em' }}>
-                TEACHING & LEARNING QUALITY AUDIT REPORT
+                {isAuditor ? 'TEACHING & LEARNING QUALITY AUDIT REPORT' : 'TEACHING & LEARNING PRE-AUDIT READINESS REPORT'}
               </h1>
               <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-                Outcome-Based Education (OBE) Course Teaching Portfolio Assessment • Session 2026/2027
+                {isAuditor 
+                  ? 'Outcome-Based Education (OBE) Course Teaching Portfolio Assessment • Session 2026/2027' 
+                  : 'Course Portfolio Self-Check & Pedagogical Readiness Assessment • Session 2026/2027'}
               </div>
             </div>
           </div>
@@ -111,12 +116,14 @@ export default function AuditReportModal({ isOpen, onClose, course }) {
               <div><strong>Course Code & Title:</strong> {course.code} - {course.name}</div>
               <div style={{ marginTop: '0.35rem' }}><strong>Academic Programme:</strong> {course.program}</div>
               <div style={{ marginTop: '0.35rem' }}><strong>Credit Hours:</strong> {course.creditHours} Credits ({(course.creditHours || 3) * 40}h SLT)</div>
+              <div style={{ marginTop: '0.35rem' }}><strong>Report Type:</strong> <span className={`badge ${isAuditor ? 'badge-primary' : 'badge-success'}`} style={{ fontSize: '0.72rem', verticalAlign: 'middle' }}>{isAuditor ? 'Internal Quality Audit' : 'Lecturer Self-Check'}</span></div>
             </div>
             <div>
               <div><strong>Course Lecturer:</strong> {course.lecturer}</div>
               <div style={{ marginTop: '0.35rem' }}><strong>Head of Department:</strong> {course.headOfDepartment || 'Prof. Ar. Dr. Norwina Mohd Nawawi'}</div>
               <div style={{ marginTop: '0.35rem' }}><strong>Internal Quality Auditor:</strong> {course.auditorName || 'Chief Internal Auditor'}</div>
-              <div style={{ marginTop: '0.35rem' }}><strong>Date of Audit:</strong> {course.auditDate || '2026-11-09'}</div>
+              <div style={{ marginTop: '0.35rem' }}><strong>Date of Review:</strong> {course.auditDate || '2026-11-09'}</div>
+              <div style={{ marginTop: '0.35rem' }}><strong>AI Assistance:</strong> {aiConfig?.apiKey ? `${aiConfig.provider.toUpperCase()} (${aiConfig.model})` : 'EduAudit Heuristic OBE Engine'}</div>
             </div>
           </div>
 

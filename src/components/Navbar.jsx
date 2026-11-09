@@ -8,7 +8,10 @@ import {
   ChevronDown, 
   BookOpen,
   Award,
-  UserCheck
+  UserCheck,
+  Sparkles,
+  GraduationCap,
+  Sliders
 } from 'lucide-react';
 import klustLogo from '../assets/klust-logo.jpg';
 
@@ -16,12 +19,19 @@ export default function Navbar({
   courses,
   activeCourse,
   onSelectCourse,
+  userRole,
+  onToggleUserRole,
+  aiConfig,
+  onOpenAISettings,
   onOpenUpload,
   onOpenDriveModal,
   onOpenReport,
   onResetSamples,
   onOpenEditCourse
 }) {
+  const isAuditor = userRole === 'auditor';
+  const hasCustomKey = Boolean(aiConfig?.apiKey);
+
   return (
     <header style={{
       background: '#ffffff',
@@ -84,25 +94,48 @@ export default function Navbar({
           </div>
 
           {/* System & Session Badges */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            {/* Active AI Status Pill */}
+            <button
+              type="button"
+              onClick={onOpenAISettings}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                background: hasCustomKey ? 'rgba(37,99,235,0.08)' : 'var(--surface-subtle)',
+                border: `1px solid ${hasCustomKey ? 'rgba(37,99,235,0.3)' : 'var(--border)'}`,
+                borderRadius: '999px',
+                padding: '0.28rem 0.75rem',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                color: hasCustomKey ? 'var(--primary)' : 'var(--text-muted)',
+                cursor: 'pointer'
+              }}
+              title="Click to configure your own AI (Gemini, OpenAI, OpenRouter)"
+            >
+              <Sparkles size={14} style={{ color: hasCustomKey ? 'var(--primary)' : '#f59e0b' }} />
+              <span>AI: {hasCustomKey ? (aiConfig.provider === 'gemini' ? 'Gemini Active' : 'OpenAI Active') : 'Simulated (Click to set Key)'}</span>
+            </button>
+
             <div style={{ textAlign: 'right' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', justifyContent: 'flex-end' }}>
                 <span style={{ fontSize: '0.98rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
                   EduAudit <span style={{ color: 'var(--primary)' }}>Pro</span>
                 </span>
                 <span className="badge badge-primary" style={{ fontSize: '0.66rem', padding: '0.12rem 0.45rem' }}>
-                  2026 Edition
+                  v2.0 AI Edition
                 </span>
               </div>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                Session 2026/2027 • Accredited Framework
+                Session 2026/2027 • Dual Persona
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Secondary Action & Course Toolbar */}
+      {/* Secondary Action & Persona Toolbar */}
       <div style={{
         background: '#f8fafc',
         padding: '0.55rem 2rem'
@@ -116,57 +149,128 @@ export default function Navbar({
           flexWrap: 'wrap',
           gap: '0.75rem'
         }}>
-          {/* Course Selector Dropdown */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
-              Auditing Course:
-            </span>
-            <div style={{ position: 'relative' }}>
-              <select
-                value={activeCourse?.id || ''}
-                onChange={(e) => onSelectCourse(e.target.value)}
+          
+          {/* Left: Course Selector + Dual-Role Switcher */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            {/* Course Selector Dropdown */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
+                Course:
+              </span>
+              <div style={{ position: 'relative' }}>
+                <select
+                  value={activeCourse?.id || ''}
+                  onChange={(e) => onSelectCourse(e.target.value)}
+                  style={{
+                    appearance: 'none',
+                    background: '#ffffff',
+                    border: '1px solid #cbd5e1',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '0.4rem 2.2rem 0.4rem 0.8rem',
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    color: 'var(--text-main)',
+                    cursor: 'pointer',
+                    outline: 'none',
+                    maxWidth: '280px',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
+                  }}
+                >
+                  {courses.map(c => (
+                    <option key={c.id} value={c.id}>
+                      {c.code} - {c.name.length > 25 ? c.name.slice(0, 25) + '...' : c.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown size={14} style={{
+                  position: 'absolute',
+                  right: '0.75rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  pointerEvents: 'none',
+                  color: 'var(--text-muted)'
+                }} />
+              </div>
+            </div>
+
+            {/* DUAL PERSONA TOGGLE (Auditor vs Lecturer) */}
+            <div style={{
+              display: 'inline-flex',
+              background: '#e2e8f0',
+              padding: '0.2rem',
+              borderRadius: '999px',
+              border: '1px solid #cbd5e1'
+            }}>
+              <button
+                type="button"
+                onClick={() => onToggleUserRole('auditor')}
                 style={{
-                  appearance: 'none',
-                  background: '#ffffff',
-                  border: '1px solid #cbd5e1',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '0.42rem 2.2rem 0.42rem 0.85rem',
-                  fontSize: '0.86rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0.28rem 0.75rem',
+                  borderRadius: '999px',
+                  border: 'none',
+                  fontSize: '0.78rem',
                   fontWeight: 700,
-                  color: 'var(--text-main)',
                   cursor: 'pointer',
-                  outline: 'none',
-                  maxWidth: '320px',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
+                  transition: 'all 0.15s ease',
+                  background: isAuditor ? '#1e40af' : 'transparent',
+                  color: isAuditor ? '#ffffff' : '#475569',
+                  boxShadow: isAuditor ? '0 1px 3px rgba(0,0,0,0.2)' : 'none'
                 }}
+                title="Internal Quality Auditor perspective: Scrutinize evidence, check compliance, issue CARs"
               >
-                {courses.map(c => (
-                  <option key={c.id} value={c.id}>
-                    {c.code} - {c.name.length > 28 ? c.name.slice(0, 28) + '...' : c.name}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown size={14} style={{
-                position: 'absolute',
-                right: '0.75rem',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                pointerEvents: 'none',
-                color: 'var(--text-muted)'
-              }} />
+                <ShieldCheck size={14} />
+                <span>Auditor Mode</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => onToggleUserRole('lecturer')}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0.28rem 0.75rem',
+                  borderRadius: '999px',
+                  border: 'none',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                  background: !isAuditor ? '#065f46' : 'transparent',
+                  color: !isAuditor ? '#ffffff' : '#475569',
+                  boxShadow: !isAuditor ? '0 1px 3px rgba(0,0,0,0.2)' : 'none'
+                }}
+                title="Course Lecturer perspective: Self-check before submission, improve rubrics, fill gaps"
+              >
+                <GraduationCap size={14} />
+                <span>Lecturer Self-Check</span>
+              </button>
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Right Action Buttons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button
               type="button"
               className="btn btn-secondary btn-sm"
+              onClick={onOpenAISettings}
+              title="Configure Bring-Your-Own-AI (Gemini, OpenAI, OpenRouter)"
+            >
+              <Sparkles size={14} style={{ color: 'var(--primary)' }} />
+              <span>AI Settings</span>
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
               onClick={onOpenEditCourse}
-              title="Edit assigned lecturer, internal auditor, and course settings"
+              title="Edit assigned lecturer, internal auditor, and HOD settings"
             >
               <UserCheck size={14} style={{ color: 'var(--primary)' }} />
-              <span>Auditor & Lecturer</span>
+              <span>Auditor, Lecturer & HOD</span>
             </button>
 
             <button
@@ -196,7 +300,7 @@ export default function Navbar({
               title="Preview and print formal Internal Quality Audit Report"
             >
               <Printer size={14} />
-              <span>Audit Report</span>
+              <span>{isAuditor ? 'Audit Report' : 'Self-Check Report'}</span>
             </button>
 
             <button

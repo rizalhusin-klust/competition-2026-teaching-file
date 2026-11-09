@@ -20,8 +20,11 @@ import { TEACHING_FILE_ITEMS, QUALITY_PILLARS } from '../data/auditRubrics';
 export default function FolderExplorerView({
   course,
   onUpdateCourse,
-  initialFolderId = '01'
+  initialFolderId = '01',
+  userRole = 'auditor',
+  onOpenAIReview
 }) {
+  const isAuditor = userRole === 'auditor';
   const [activeFolderId, setActiveFolderId] = useState(initialFolderId);
   const [savedNotification, setSavedNotification] = useState(false);
 
@@ -233,46 +236,62 @@ export default function FolderExplorerView({
               </p>
             </div>
 
-            {/* Quality Score Selector Widget */}
-            <div style={{
-              background: 'var(--surface-subtle)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-lg)',
-              padding: '0.85rem 1.1rem',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.4rem'
-            }}>
-              <span style={{ fontSize: '0.74rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                Quality Score (1-5)
-              </span>
-              <div style={{ display: 'flex', gap: '0.35rem' }}>
-                {[1, 2, 3, 4, 5].map(star => {
-                  const isCurrent = audit.qualityScore === star;
-                  return (
-                    <button
-                      key={star}
-                      type="button"
-                      onClick={() => handleScoreChange(star)}
-                      className="score-pill"
-                      style={{
-                        background: isCurrent ? 'var(--primary)' : '#ffffff',
-                        color: isCurrent ? '#ffffff' : 'var(--text-muted)',
-                        border: isCurrent ? '1px solid var(--primary)' : '1px solid var(--border)',
-                        boxShadow: isCurrent ? '0 2px 6px rgba(37,99,235,0.3)' : 'none',
-                        cursor: 'pointer'
-                      }}
-                      title={`Rate as ${star} / 5`}
-                    >
-                      {star}
-                    </button>
-                  );
-                })}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.6rem' }}>
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                onClick={() => onOpenAIReview && onOpenAIReview(activeItem)}
+                style={{
+                  background: isAuditor ? 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)' : 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                  borderColor: 'transparent',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                }}
+              >
+                <Sparkles size={14} />
+                <span>{isAuditor ? '🤖 Review Folder with My AI' : '🤖 AI Self-Check Guidance'}</span>
+              </button>
+
+              {/* Quality Score Selector Widget */}
+              <div style={{
+                background: 'var(--surface-subtle)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-lg)',
+                padding: '0.65rem 0.95rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '0.35rem'
+              }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                  {isAuditor ? 'Auditor Score (1-5)' : 'Self-Rating (1-5)'}
+                </span>
+                <div style={{ display: 'flex', gap: '0.35rem' }}>
+                  {[1, 2, 3, 4, 5].map(star => {
+                    const isCurrent = audit.qualityScore === star;
+                    return (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => handleScoreChange(star)}
+                        className="score-pill"
+                        style={{
+                          background: isCurrent ? 'var(--primary)' : '#ffffff',
+                          color: isCurrent ? '#ffffff' : 'var(--text-muted)',
+                          border: isCurrent ? '1px solid var(--primary)' : '1px solid var(--border)',
+                          boxShadow: isCurrent ? '0 2px 6px rgba(37,99,235,0.3)' : 'none',
+                          cursor: 'pointer'
+                        }}
+                        title={`Rate as ${star} / 5`}
+                      >
+                        {star}
+                      </button>
+                    );
+                  })}
+                </div>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                  {audit.qualityTier || 'Satisfactory'}
+                </span>
               </div>
-              <span style={{ fontSize: '0.74rem', fontWeight: 700, color: 'var(--text-main)' }}>
-                {audit.qualityTier || 'Satisfactory'}
-              </span>
             </div>
           </div>
         </div>
@@ -393,7 +412,7 @@ export default function FolderExplorerView({
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <CheckCircle2 size={18} style={{ color: 'var(--success)' }} />
               <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-main)' }}>
-                Auditor Quality Findings & Strengths
+                {isAuditor ? 'Auditor Quality Findings & Strengths' : 'Identified Strengths & Good Practices'}
               </h3>
             </div>
             <button
@@ -401,7 +420,7 @@ export default function FolderExplorerView({
               className="btn btn-secondary btn-sm"
               onClick={handleAddFinding}
             >
-              <Plus size={13} /> Add Finding
+              <Plus size={13} /> {isAuditor ? 'Add Finding' : 'Add Strength'}
             </button>
           </div>
 
@@ -443,7 +462,7 @@ export default function FolderExplorerView({
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <AlertCircle size={18} style={{ color: 'var(--warning)' }} />
               <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-main)' }}>
-                Academic Quality Risks & Flags ({audit.risks?.length || 0})
+                {isAuditor ? 'Academic Quality Risks & Flags' : 'Identified Gaps to Address Before Submission'} ({audit.risks?.length || 0})
               </h3>
             </div>
             <button
@@ -451,7 +470,7 @@ export default function FolderExplorerView({
               className="btn btn-secondary btn-sm"
               onClick={handleAddRisk}
             >
-              <Plus size={13} /> Add Risk Flag
+              <Plus size={13} /> {isAuditor ? 'Add Risk Flag' : 'Add Missing Item'}
             </button>
           </div>
 
@@ -493,11 +512,11 @@ export default function FolderExplorerView({
           )}
         </div>
 
-        {/* Auditor Remarks & Recommendations Editor */}
+        {/* Auditor / Lecturer Remarks & Recommendations Editor */}
         <div className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-main)' }}>
-              Internal Auditor Feedback & Formal Remarks
+              {isAuditor ? 'Internal Auditor Feedback & Formal Remarks' : 'Lecturer Self-Review Notes & Remediation Plan'}
             </h3>
             {savedNotification && (
               <span className="badge badge-success fade-in">
@@ -511,7 +530,9 @@ export default function FolderExplorerView({
             value={audit.auditorNotes || ''}
             onChange={(e) => handleAuditorNotesChange(e.target.value)}
             onBlur={handleSaveNotification}
-            placeholder="Type your qualitative auditor remarks, feed-forward critique, and constructive recommendations here..."
+            placeholder={isAuditor
+              ? "Type your qualitative auditor remarks, feed-forward critique, and constructive recommendations here..."
+              : "Type your self-assessment notes, reflection on student attainment, and items you plan to fix before HOD submission..."}
             style={{
               width: '100%',
               padding: '0.85rem',

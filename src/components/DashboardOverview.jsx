@@ -16,20 +16,26 @@ import {
   ArrowRight,
   ShieldAlert,
   Sparkles,
-  Building
+  Building,
+  GraduationCap
 } from 'lucide-react';
 import { QUALITY_PILLARS, TEACHING_FILE_ITEMS } from '../data/auditRubrics';
 import { calculateAuditMetrics, generateExecutiveSummary } from '../services/auditEngine';
 
 export default function DashboardOverview({
   course,
+  userRole = 'auditor',
+  onToggleUserRole,
   onNavigateTab,
   onOpenReport,
   onSelectFolder,
-  onOpenEditCourse
+  onOpenEditCourse,
+  onOpenAIReview,
+  onOpenAISettings
 }) {
   if (!course) return null;
 
+  const isAuditor = userRole === 'auditor';
   const metrics = calculateAuditMetrics(course);
   const summaryText = generateExecutiveSummary(course, metrics);
 
@@ -128,6 +134,19 @@ export default function DashboardOverview({
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.6rem' }}>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={() => onOpenAIReview && onOpenAIReview(course.folders?.[0] || { id: '01', title: 'Course Information & Approved Syllabus' })}
+              style={{
+                background: isAuditor ? 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)' : 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                borderColor: 'transparent',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+              }}
+            >
+              <Sparkles size={14} />
+              <span>{isAuditor ? '🤖 AI Quality Scrutiny' : '🤖 AI Pre-Audit Health Check'}</span>
+            </button>
 
             <button
               type="button"
@@ -152,13 +171,70 @@ export default function DashboardOverview({
             )}
             <button
               type="button"
-              className="btn btn-primary btn-sm"
+              className="btn btn-secondary btn-sm"
               onClick={onOpenReport}
+              style={{ background: 'rgba(255,255,255,0.15)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.25)' }}
             >
               <FileText size={14} />
-              <span>Generate Audit Report</span>
+              <span>{isAuditor ? 'Generate Audit Report' : 'Preview Self-Check Report'}</span>
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Role Context & Guidance Banner */}
+      <div style={{
+        background: isAuditor ? 'linear-gradient(90deg, #eff6ff 0%, #f8fafc 100%)' : 'linear-gradient(90deg, #ecfdf5 0%, #f8fafc 100%)',
+        border: `1px solid ${isAuditor ? '#bfdbfe' : '#a7f3d0'}`,
+        borderLeft: `5px solid ${isAuditor ? '#2563eb' : '#059669'}`,
+        borderRadius: 'var(--radius-md)',
+        padding: '1rem 1.35rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '1rem'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem' }}>
+          <div style={{
+            width: '38px',
+            height: '38px',
+            borderRadius: '50%',
+            background: isAuditor ? '#dbeafe' : '#d1fae5',
+            color: isAuditor ? '#1e40af' : '#065f46',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
+          }}>
+            {isAuditor ? <ShieldCheck size={20} /> : <GraduationCap size={20} />}
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontSize: '0.92rem', fontWeight: 800, color: isAuditor ? '#1e3a8a' : '#065f46' }}>
+                {isAuditor ? 'Active Perspective: Internal Quality Auditor' : 'Active Perspective: Course Lecturer Self-Check'}
+              </span>
+              <span className={`badge ${isAuditor ? 'badge-primary' : 'badge-success'}`} style={{ fontSize: '0.66rem' }}>
+                {isAuditor ? 'Compliance & Scrutiny' : 'Pre-Audit Coaching'}
+              </span>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: '#475569', margin: '0.2rem 0 0 0' }}>
+              {isAuditor
+                ? 'Reviewing teaching file for accreditation rigor. Verify constructive alignment, evaluate marking objectivity, and flag non-conformance risks.'
+                : 'Conducting pre-submission self-assessment. Identify missing files, refine rubric descriptors, and verify continuous quality improvement (CQI).'}
+            </p>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={() => onToggleUserRole(isAuditor ? 'lecturer' : 'auditor')}
+            style={{ fontSize: '0.78rem' }}
+          >
+            Switch to {isAuditor ? 'Lecturer Self-Check' : 'Auditor Mode'}
+          </button>
         </div>
       </div>
 
