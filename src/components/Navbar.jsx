@@ -253,66 +253,196 @@ export default function Navbar({
             </div>
           </div>
 
-          {/* Right Action Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+          {/* Sequential Numbered Workflow Steps Header (Bigger & Explicitly Numbered) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+            <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '0.2rem' }}>
+              Steps:
+            </span>
+
+            {/* Step 1: AI Settings */}
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary"
               onClick={onOpenAISettings}
-              title="Configure Bring-Your-Own-AI (Gemini, OpenAI, OpenRouter)"
+              style={{
+                padding: '0.45rem 0.85rem',
+                fontSize: '0.84rem',
+                fontWeight: 700,
+                border: '1.5px solid #cbd5e1',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                gap: '0.45rem'
+              }}
+              title="Step 1: Configure Bring-Your-Own-AI (Gemini, OpenAI, OpenRouter)"
             >
-              <Sparkles size={14} style={{ color: 'var(--primary)' }} />
+              <span style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                background: '#3b82f6',
+                color: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.74rem',
+                fontWeight: 800
+              }}>1</span>
+              <Sparkles size={15} style={{ color: '#2563eb' }} />
               <span>AI Settings</span>
             </button>
 
+            {/* Step 2: Auditor, Lecturer and HOD */}
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary"
               onClick={onOpenEditCourse}
-              title="Edit assigned lecturer, internal auditor, and HOD settings"
+              style={{
+                padding: '0.45rem 0.85rem',
+                fontSize: '0.84rem',
+                fontWeight: 700,
+                border: '1.5px solid #cbd5e1',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                gap: '0.45rem'
+              }}
+              title="Step 2: Edit assigned lecturer, internal auditor, and HOD settings"
             >
-              <UserCheck size={14} style={{ color: 'var(--primary)' }} />
+              <span style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                background: '#3b82f6',
+                color: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.74rem',
+                fontWeight: 800
+              }}>2</span>
+              <UserCheck size={15} style={{ color: '#2563eb' }} />
               <span>Auditor, Lecturer & HOD</span>
             </button>
 
+            {/* Step 3: Google Drive */}
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary"
               onClick={onOpenDriveModal}
-              title="Connect with Google Drive & Apps Script"
+              style={{
+                padding: '0.45rem 0.85rem',
+                fontSize: '0.84rem',
+                fontWeight: 700,
+                border: '1.5px solid #cbd5e1',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                gap: '0.45rem'
+              }}
+              title="Step 3: Connect with Google Drive & Apps Script"
             >
-              <Cloud size={14} style={{ color: '#0284c7' }} />
+              <span style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                background: '#0284c7',
+                color: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.74rem',
+                fontWeight: 800
+              }}>3</span>
+              <Cloud size={15} style={{ color: '#0284c7' }} />
               <span>Google Drive</span>
             </button>
 
+            {/* Step 4: Upload Folder / ZIP */}
             <button
               type="button"
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary"
               onClick={onOpenUpload}
-              title="Upload Teaching File Folder or ZIP"
+              style={{
+                padding: '0.45rem 0.95rem',
+                fontSize: '0.84rem',
+                fontWeight: 700,
+                boxShadow: '0 2px 6px rgba(37,99,235,0.25)',
+                gap: '0.45rem'
+              }}
+              title="Step 4: Upload Teaching File Folder or ZIP archive"
             >
-              <FolderUp size={14} />
+              <span style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                background: '#ffffff',
+                color: '#1d4ed8',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.74rem',
+                fontWeight: 800
+              }}>4</span>
+              <FolderUp size={15} />
               <span>Upload Folder / ZIP</span>
             </button>
 
+            {/* Step 5: Audit Report */}
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary"
               onClick={onOpenReport}
-              title="Preview and print formal Internal Quality Audit Report"
+              style={{
+                padding: '0.45rem 0.85rem',
+                fontSize: '0.84rem',
+                fontWeight: 700,
+                border: '1.5px solid #cbd5e1',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                gap: '0.45rem'
+              }}
+              title="Step 5: Preview and print formal Internal Quality Audit / Self-Check Report"
             >
-              <Printer size={14} />
+              <span style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                background: '#059669',
+                color: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.74rem',
+                fontWeight: 800
+              }}>5</span>
+              <Printer size={15} style={{ color: '#059669' }} />
               <span>{isAuditor ? 'Audit Report' : 'Self-Check Report'}</span>
             </button>
 
+            {/* Step 6: Single HTML Dossier */}
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary"
               onClick={onOpenExportHtml}
-              style={{ background: 'rgba(30,64,175,0.06)', borderColor: 'rgba(30,64,175,0.25)', color: '#1e40af', fontWeight: 700 }}
-              title="Save all 13 folders, links, and audit report in a single standalone .html file"
+              style={{
+                padding: '0.45rem 0.9rem',
+                fontSize: '0.84rem',
+                fontWeight: 800,
+                background: '#eff6ff',
+                borderColor: '#93c5fd',
+                color: '#1e40af',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                gap: '0.45rem'
+              }}
+              title="Step 6: Save all 13 folders, links, and audit report in a single standalone .html file"
             >
-              <FileCode size={14} />
+              <span style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                background: '#1e40af',
+                color: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.74rem',
+                fontWeight: 800
+              }}>6</span>
+              <FileCode size={15} style={{ color: '#1e40af' }} />
               <span>Single HTML Dossier</span>
             </button>
 
@@ -320,9 +450,10 @@ export default function Navbar({
               type="button"
               className="btn btn-ghost btn-sm"
               onClick={onResetSamples}
-              title="Reset to pre-loaded sample courses"
+              title="Reset to default pre-loaded sample courses"
+              style={{ padding: '0.45rem' }}
             >
-              <RotateCcw size={14} />
+              <RotateCcw size={15} />
             </button>
           </div>
         </div>
