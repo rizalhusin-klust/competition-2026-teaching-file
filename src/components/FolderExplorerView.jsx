@@ -13,7 +13,8 @@ import {
   Check,
   Award,
   Upload,
-  AlertCircle
+  AlertCircle,
+  Link2
 } from 'lucide-react';
 import { TEACHING_FILE_ITEMS, QUALITY_PILLARS } from '../data/auditRubrics';
 
@@ -126,6 +127,54 @@ export default function FolderExplorerView({
         risks: updatedRisks
       }
     };
+    onUpdateCourse({ ...course, folderAudits: updatedAudits });
+  };
+
+  const handleAddCustomFileLink = () => {
+    const fileName = prompt('Enter document name (e.g. Approved_Syllabus.pdf or Studio_Brief.docx):');
+    if (!fileName) return;
+
+    const fileLink = prompt('Enter Google Drive or external link for this document:', course.driveFolderUrl || 'https://drive.google.com');
+    if (!fileLink) return;
+
+    const newFile = {
+      name: fileName.trim(),
+      size: 'Cloud Link',
+      updated: new Date().toISOString().split('T')[0],
+      driveLink: fileLink.trim()
+    };
+
+    const existingFiles = audit.files || [];
+    const updatedFiles = [...existingFiles, newFile];
+
+    const updatedAudits = {
+      ...course.folderAudits,
+      [activeItem.id]: {
+        ...audit,
+        files: updatedFiles,
+        fileCount: updatedFiles.length,
+        submitted: true
+      }
+    };
+
+    onUpdateCourse({ ...course, folderAudits: updatedAudits });
+  };
+
+  const handleRemoveFile = (index) => {
+    if (!window.confirm('Remove this document link from this folder?')) return;
+    const existingFiles = audit.files || [];
+    const updatedFiles = existingFiles.filter((_, i) => i !== index);
+
+    const updatedAudits = {
+      ...course.folderAudits,
+      [activeItem.id]: {
+        ...audit,
+        files: updatedFiles,
+        fileCount: updatedFiles.length,
+        submitted: updatedFiles.length > 0
+      }
+    };
+
     onUpdateCourse({ ...course, folderAudits: updatedAudits });
   };
 
@@ -324,15 +373,35 @@ export default function FolderExplorerView({
 
         {/* Uploaded Documents List */}
         <div className="card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
             <div>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-main)' }}>
                 Documents in this Folder ({audit.files?.length || 0})
               </h3>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                Verified files available for audit scrutiny.
+                Verified files & direct cloud links available for audit scrutiny.
               </p>
             </div>
+
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={handleAddCustomFileLink}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                background: '#f0fdf4',
+                borderColor: '#86efac',
+                color: '#166534'
+              }}
+              title="Add a document link (Google Drive, Doc, PDF) to this folder"
+            >
+              <Link2 size={14} style={{ color: '#16a34a' }} />
+              <span>+ Add Document Link</span>
+            </button>
           </div>
 
           {audit.files?.length > 0 ? (
@@ -373,16 +442,27 @@ export default function FolderExplorerView({
                     </div>
                   </div>
 
-                  <a
-                    href={file.driveLink || course.driveFolderUrl || 'https://drive.google.com'}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-secondary btn-sm"
-                    style={{ fontSize: '0.78rem', padding: '0.35rem 0.65rem' }}
-                  >
-                    <ExternalLink size={13} />
-                    <span>View File</span>
-                  </a>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <a
+                      href={file.driveLink || course.driveFolderUrl || 'https://drive.google.com'}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn btn-secondary btn-sm"
+                      style={{ fontSize: '0.78rem', padding: '0.35rem 0.65rem' }}
+                    >
+                      <ExternalLink size={13} />
+                      <span>View File</span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveFile(idx)}
+                      className="btn-ghost"
+                      style={{ color: '#991b1b', padding: '0.35rem' }}
+                      title="Delete file link"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

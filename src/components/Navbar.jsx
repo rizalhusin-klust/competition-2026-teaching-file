@@ -13,7 +13,9 @@ import {
   GraduationCap,
   Sliders,
   FileCode,
-  PlusCircle
+  PlusCircle,
+  FileSpreadsheet,
+  Database
 } from 'lucide-react';
 import klustLogo from '../assets/klust-logo.jpg';
 
@@ -27,6 +29,7 @@ export default function Navbar({
   onOpenAISettings,
   onOpenUpload,
   onOpenDriveModal,
+  onOpenGSheet,
   onOpenReport,
   onResetSamples,
   onOpenEditCourse,
@@ -379,6 +382,28 @@ export default function Navbar({
               }}>3</span>
               <Cloud size={20} style={{ color: '#0284c7' }} />
               <span>Google Drive</span>
+            </button>
+
+            {/* Google Sheets Database */}
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onOpenGSheet}
+              style={{
+                padding: '0.65rem 1.15rem',
+                fontSize: '1.05rem',
+                fontWeight: 700,
+                border: '1.5px solid #a7f3d0',
+                background: '#f0fdf4',
+                color: '#166534',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                gap: '0.6rem',
+                borderRadius: 'var(--radius-md)'
+              }}
+              title="Google Sheet Database: Sync all keyed-in data, remarks and links to your personal Google Sheet"
+            >
+              <FileSpreadsheet size={20} style={{ color: '#059669' }} />
+              <span>Google Sheet DB</span>
             </button>
 
             {/* Step 4: Upload Folder / ZIP */}

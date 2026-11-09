@@ -11,12 +11,14 @@ import EditCourseModal from './components/EditCourseModal';
 import AISettingsModal from './components/AISettingsModal';
 import AIEvaluationModal from './components/AIEvaluationModal';
 import StandaloneHtmlExportModal from './components/StandaloneHtmlExportModal';
+import GoogleSheetDatabaseModal from './components/GoogleSheetDatabaseModal';
 import { 
   getStoredCourses, 
   getActiveCourseId, 
   setActiveCourseId, 
   updateCourseInStore, 
-  resetToSampleCourses 
+  resetToSampleCourses,
+  saveStoredCourses
 } from './services/storage';
 import { 
   getStoredUserRole, 
@@ -46,6 +48,7 @@ export default function App() {
   // Modals state
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isDriveModalOpen, setIsDriveModalOpen] = useState(false);
+  const [isGSheetOpen, setIsGSheetOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isEditCourseOpen, setIsEditCourseOpen] = useState(false);
   const [isAISettingsOpen, setIsAISettingsOpen] = useState(false);
@@ -126,6 +129,7 @@ export default function App() {
         onOpenAISettings={() => setIsAISettingsOpen(true)}
         onOpenUpload={() => setIsUploadOpen(true)}
         onOpenDriveModal={() => setIsDriveModalOpen(true)}
+        onOpenGSheet={() => setIsGSheetOpen(true)}
         onOpenReport={() => setIsReportOpen(true)}
         onResetSamples={handleResetSamples}
         onOpenEditCourse={() => setIsEditCourseOpen(true)}
@@ -228,6 +232,21 @@ export default function App() {
         isOpen={isDriveModalOpen}
         onClose={() => setIsDriveModalOpen(false)}
         course={activeCourse}
+      />
+
+      <GoogleSheetDatabaseModal
+        isOpen={isGSheetOpen}
+        onClose={() => setIsGSheetOpen(false)}
+        course={activeCourse}
+        onCoursesLoaded={(loadedCourses) => {
+          saveStoredCourses(loadedCourses);
+          setCourses([...loadedCourses]);
+          if (loadedCourses.length > 0) {
+            setActiveCourseIdState(loadedCourses[0].id);
+            setActiveCourseId(loadedCourses[0].id);
+          }
+        }}
+        onCourseUpdated={handleUpdateCourse}
       />
 
       <AuditReportModal
