@@ -508,10 +508,35 @@ export function generateStandaloneHtmlContent(course, role = 'auditor', logoData
 
     <div class="folders-dossier">
       ${TEACHING_FILE_ITEMS.map(item => {
+        const is100Coursework = Boolean(course.isCourseworkOnly || course.is100PercentCoursework);
+        const isExamFolder = item.id === '09' || item.id === '10';
         const audit = course.folderAudits?.[item.id] || {};
         const score = audit.qualityScore || 3;
         const submitted = Boolean(audit.submitted);
         const folderDriveUrl = audit.driveLink || course.driveFolderUrl;
+
+        if (is100Coursework && isExamFolder) {
+          return `
+          <div class="folder-item" style="background: #f0fdf4; border-color: #86efac;">
+            <div class="folder-header">
+              <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                  <span class="badge badge-primary">${item.code}</span>
+                  <span class="badge badge-success">Exempt (100% Coursework Course)</span>
+                </div>
+                <div class="folder-title" style="color: #166534;">${item.title}</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.25rem 0.65rem;">
+                  Not Required
+                </span>
+              </div>
+            </div>
+            <div style="font-size: 0.84rem; color: #15803d; margin-top: 0.5rem; font-style: italic;">
+              This subject is assessed 100% via studio/practical coursework. Final moderated examination questions and exam answer scripts are not applicable.
+            </div>
+          </div>`;
+        }
 
         return `
         <div class="folder-item">

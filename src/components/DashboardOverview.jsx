@@ -80,6 +80,11 @@ export default function DashboardOverview({
               <span className="badge" style={{ background: 'rgba(255,255,255,0.1)', color: '#e2e8f0', border: '1px solid rgba(255,255,255,0.15)' }}>
                 {course.creditHours} Credits ({(course.creditHours || 3) * 40}h SLT)
               </span>
+              {Boolean(course.isCourseworkOnly || course.is100PercentCoursework) && (
+                <span className="badge" style={{ background: 'rgba(16, 185, 129, 0.25)', color: '#6ee7b7', border: '1px solid rgba(16, 185, 129, 0.4)', fontWeight: 800 }}>
+                  ✓ 100% Coursework (Exam Exempt)
+                </span>
+              )}
             </div>
 
             <h1 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#ffffff' }}>

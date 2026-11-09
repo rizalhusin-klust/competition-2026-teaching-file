@@ -315,6 +315,8 @@ export default function FolderExplorerView({
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
           {TEACHING_FILE_ITEMS.map(item => {
+            const is100Coursework = Boolean(course.isCourseworkOnly || course.is100PercentCoursework);
+            const isExamFolder = item.id === '09' || item.id === '10';
             const folderAudit = course.folderAudits?.[item.id] || { submitted: false, qualityScore: 1, fileCount: 0 };
             const isSelected = item.id === activeFolderId;
             const score = folderAudit.qualityScore || 1;
@@ -330,8 +332,9 @@ export default function FolderExplorerView({
                   padding: '0.65rem 0.75rem',
                   borderRadius: 'var(--radius-md)',
                   cursor: 'pointer',
-                  background: isSelected ? 'var(--primary-light)' : 'transparent',
+                  background: isSelected ? 'var(--primary-light)' : (is100Coursework && isExamFolder ? '#f8fafc' : 'transparent'),
                   border: isSelected ? '1px solid var(--primary-border)' : '1px solid transparent',
+                  opacity: (is100Coursework && isExamFolder && !isSelected) ? 0.75 : 1,
                   transition: 'all 0.15s ease'
                 }}
               >
@@ -358,14 +361,24 @@ export default function FolderExplorerView({
                       {item.title}
                     </div>
                     <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                      {folderAudit.fileCount || 0} file(s)
+                      {is100Coursework && isExamFolder ? (
+                        <span style={{ color: '#059669', fontWeight: 700 }}>N/A • 100% Coursework</span>
+                      ) : (
+                        `${folderAudit.fileCount || 0} file(s)`
+                      )}
                     </div>
                   </div>
                 </div>
 
-                <span className={`badge ${score >= 4 ? 'badge-success' : (score === 3 ? 'badge-warning' : 'badge-danger')}`} style={{ fontSize: '0.7rem', padding: '0.15rem 0.45rem' }}>
-                  {score}/5
-                </span>
+                {is100Coursework && isExamFolder ? (
+                  <span className="badge badge-success" style={{ fontSize: '0.66rem', padding: '0.12rem 0.35rem' }}>
+                    Exempt
+                  </span>
+                ) : (
+                  <span className={`badge ${score >= 4 ? 'badge-success' : (score === 3 ? 'badge-warning' : 'badge-danger')}`} style={{ fontSize: '0.7rem', padding: '0.15rem 0.45rem' }}>
+                    {score}/5
+                  </span>
+                )}
               </div>
             );
           })}
@@ -379,7 +392,7 @@ export default function FolderExplorerView({
         <div className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem', flexWrap: 'wrap' }}>
                 <span className="badge badge-primary">
                   {activeItem.code}
                 </span>
@@ -388,9 +401,15 @@ export default function FolderExplorerView({
                     Mapped Pillar: {pillar.name}
                   </span>
                 )}
-                <span className={`badge ${audit.submitted ? 'badge-success' : 'badge-danger'}`}>
-                  {audit.submitted ? 'Folder Submitted' : 'Missing Submission'}
-                </span>
+                {Boolean(course.isCourseworkOnly || course.is100PercentCoursework) && (activeItem.id === '09' || activeItem.id === '10') ? (
+                  <span className="badge badge-success" style={{ fontWeight: 800 }}>
+                    Exempted: 100% Coursework Subject
+                  </span>
+                ) : (
+                  <span className={`badge ${audit.submitted ? 'badge-success' : 'badge-danger'}`}>
+                    {audit.submitted ? 'Folder Submitted' : 'Missing Submission'}
+                  </span>
+                )}
               </div>
 
               <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)' }}>
@@ -399,6 +418,26 @@ export default function FolderExplorerView({
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
                 Google Drive Directory: <code className="mono">{activeItem.driveFolderName}</code>
               </p>
+              
+              {Boolean(course.isCourseworkOnly || course.is100PercentCoursework) && (activeItem.id === '09' || activeItem.id === '10') && (
+                <div style={{
+                  marginTop: '0.75rem',
+                  padding: '0.65rem 0.85rem',
+                  background: '#f0fdf4',
+                  border: '1px solid #bbf7d0',
+                  borderRadius: 'var(--radius-sm)',
+                  fontSize: '0.82rem',
+                  color: '#166534',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}>
+                  <CheckCircle2 size={16} style={{ color: '#16a34a', flexShrink: 0 }} />
+                  <span>
+                    <strong>100% Coursework Exemption:</strong> This subject has no final examination. Moderated final exam papers and exam answer scripts are not required and do not penalize audit compliance or quality scores.
+                  </span>
+                </div>
+              )}
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.6rem' }}>

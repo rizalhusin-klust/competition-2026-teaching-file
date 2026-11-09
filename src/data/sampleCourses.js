@@ -14,8 +14,9 @@ export const SAMPLE_COURSES = [
     auditorName: 'Prof. Ts. Dr. Hishamuddin bin Mohd (Chief Internal Auditor)',
     headOfDepartment: 'Prof. Ar. Dr. Norwina Mohd Nawawi (Head of Architecture)',
     auditStatus: 'Completed - Minor CQI Actions Required',
+    isCourseworkOnly: true,
     overallQualityIndex: 84, // 84% Commendable
-    complianceRate: 100, // All 13 folders submitted
+    complianceRate: 100, // All applicable folders submitted
     clos: [
       {
         id: 'clo1',

@@ -25,7 +25,8 @@ export default function EditCourseModal({ isOpen, onClose, course, onSaveCourse,
     creditHours: 3,
     auditDate: '',
     auditStatus: '',
-    driveFolderUrl: ''
+    driveFolderUrl: '',
+    isCourseworkOnly: false
   });
 
   useEffect(() => {
@@ -41,7 +42,8 @@ export default function EditCourseModal({ isOpen, onClose, course, onSaveCourse,
         creditHours: course.creditHours || 3,
         auditDate: course.auditDate || new Date().toISOString().split('T')[0],
         auditStatus: course.auditStatus || 'Audit In Progress',
-        driveFolderUrl: course.driveFolderUrl || ''
+        driveFolderUrl: course.driveFolderUrl || '',
+        isCourseworkOnly: Boolean(course.isCourseworkOnly || course.is100PercentCoursework)
       });
       setSavedSuccess(false);
     }
@@ -287,6 +289,42 @@ export default function EditCourseModal({ isOpen, onClose, course, onSaveCourse,
                   <option value="Non-Compliant - Remediation Required">Non-Compliant - Remediation</option>
                 </select>
               </div>
+            </div>
+
+            {/* 100% Coursework Assessment Type Toggle */}
+            <div style={{
+              background: formData.isCourseworkOnly ? '#f0fdf4' : 'var(--surface-subtle)',
+              border: `1.5px solid ${formData.isCourseworkOnly ? '#86efac' : 'var(--border)'}`,
+              borderRadius: 'var(--radius-md)',
+              padding: '0.85rem 1rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+            onClick={() => handleChange('isCourseworkOnly', !formData.isCourseworkOnly)}
+            >
+              <div>
+                <div style={{ fontSize: '0.88rem', fontWeight: 800, color: formData.isCourseworkOnly ? '#166534' : 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                  <span>100% Coursework Subject (No Final Exam)</span>
+                  {formData.isCourseworkOnly && (
+                    <span className="badge badge-success" style={{ fontSize: '0.68rem', padding: '0.1rem 0.4rem' }}>
+                      Active
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+                  Exempts Folder 09 (Moderated Final Exam) and Folder 10 (Exam Scripts). Portfolio audits against the remaining 11 folders.
+                </div>
+              </div>
+
+              <input
+                type="checkbox"
+                checked={formData.isCourseworkOnly}
+                onChange={(e) => handleChange('isCourseworkOnly', e.target.checked)}
+                style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: '#16a34a' }}
+              />
             </div>
 
             {/* Google Drive Folder URL */}

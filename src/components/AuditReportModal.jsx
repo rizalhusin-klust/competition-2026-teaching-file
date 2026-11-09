@@ -244,8 +244,28 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {TEACHING_FILE_ITEMS.map(item => {
+                const is100Coursework = Boolean(course.isCourseworkOnly || course.is100PercentCoursework);
+                const isExamFolder = item.id === '09' || item.id === '10';
                 const audit = course.folderAudits?.[item.id] || { submitted: false, qualityScore: 1, files: [] };
                 const score = audit.qualityScore || 1;
+
+                if (is100Coursework && isExamFolder) {
+                  return (
+                    <div key={item.id} style={{ border: '1px solid #bbf7d0', borderRadius: 'var(--radius-sm)', padding: '0.75rem 1rem', background: '#f0fdf4' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#166534' }}>
+                          {item.code}: {item.title}
+                        </div>
+                        <span className="badge badge-success" style={{ fontSize: '0.72rem', fontWeight: 800 }}>
+                          Exempt (100% Coursework Course)
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '0.78rem', color: '#15803d', marginTop: '0.25rem' }}>
+                        <em>This course has no final examination. Moderated exam paper and exam answer scripts are not required.</em>
+                      </div>
+                    </div>
+                  );
+                }
 
                 return (
                   <div key={item.id} style={{ border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.75rem 1rem', background: '#ffffff' }}>

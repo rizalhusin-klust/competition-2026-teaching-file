@@ -28,6 +28,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
   const [auditorName, setAuditorName] = useState('');
   const [semester, setSemester] = useState('Semester 1 - 2026/2027');
   const [driveUrl, setDriveUrl] = useState('');
+  const [isCourseworkOnly, setIsCourseworkOnly] = useState(false);
 
   const folderInputRef = useRef(null);
   const zipInputRef = useRef(null);
@@ -155,6 +156,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
       semester: semester,
       creditHours: 3,
       driveFolderUrl: driveUrl.trim() || '',
+      isCourseworkOnly: isCourseworkOnly,
       auditDate: new Date().toISOString().split('T')[0],
       auditStatus: 'Pending Verification',
       overallQualityIndex: 60,
@@ -294,6 +296,42 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
                 style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
               />
             </div>
+          </div>
+
+          {/* 100% Coursework Assessment Type Toggle */}
+          <div style={{
+            background: isCourseworkOnly ? '#f0fdf4' : 'var(--surface-subtle)',
+            border: `1.5px solid ${isCourseworkOnly ? '#86efac' : 'var(--border)'}`,
+            borderRadius: 'var(--radius-md)',
+            padding: '0.75rem 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            transition: 'all 0.15s ease'
+          }}
+          onClick={() => setIsCourseworkOnly(!isCourseworkOnly)}
+          >
+            <div>
+              <div style={{ fontSize: '0.86rem', fontWeight: 800, color: isCourseworkOnly ? '#166534' : 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                <span>100% Coursework Subject (Studio / Lab / Practical)</span>
+                {isCourseworkOnly && (
+                  <span className="badge badge-success" style={{ fontSize: '0.66rem', padding: '0.1rem 0.35rem' }}>
+                    No Final Exam Required
+                  </span>
+                )}
+              </div>
+              <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
+                Exempts Folder 09 (Moderated Exam) and Folder 10 (Exam Scripts). Only requires the 11 coursework folders.
+              </div>
+            </div>
+
+            <input
+              type="checkbox"
+              checked={isCourseworkOnly}
+              onChange={(e) => setIsCourseworkOnly(e.target.checked)}
+              style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: '#16a34a' }}
+            />
           </div>
 
           {/* Mode Switcher Tabs */}
