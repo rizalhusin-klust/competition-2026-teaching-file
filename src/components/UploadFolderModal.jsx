@@ -25,6 +25,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
   const [courseName, setCourseName] = useState('');
   const [lecturer, setLecturer] = useState('');
   const [headOfDepartment, setHeadOfDepartment] = useState('');
+  const [auditorName, setAuditorName] = useState('');
   const [semester, setSemester] = useState('Semester 1 - 2026/2027');
   const [driveUrl, setDriveUrl] = useState('');
 
@@ -46,6 +47,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
         name: courseName,
         lecturer: lecturer,
         headOfDepartment: headOfDepartment,
+        auditorName: auditorName,
         semester: semester,
         driveFolderUrl: driveUrl
       });
@@ -72,6 +74,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
         name: courseName,
         lecturer: lecturer,
         headOfDepartment: headOfDepartment,
+        auditorName: auditorName,
         semester: semester,
         driveFolderUrl: driveUrl
       });
@@ -97,16 +100,16 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
     const mockFiles = [];
     const courseObj = {
       id: `course_${Date.now()}`,
-      code: courseCode || 'ARC 3126',
-      name: courseName || 'Architectural Design Studio III',
-      lecturer: lecturer || 'Ar. Rizal bin Husin',
-      headOfDepartment: headOfDepartment || 'Prof. Ar. Dr. Norwina Mohd Nawawi',
-      program: 'Faculty of Built Environment',
+      code: courseCode || 'ARCH 1111',
+      name: courseName || 'Architecture Design Studio 1',
+      lecturer: lecturer || 'Rizal bin Husin',
+      headOfDepartment: headOfDepartment || 'Anna Kamelia bt Kamaruddin',
+      auditorName: auditorName || 'Zairila Juria bt Zainal Abidin',
+      program: 'Faculty of Built Environment (FABE)',
       semester: semester,
       creditHours: 4,
       driveFolderUrl: driveUrl,
       auditDate: new Date().toISOString().split('T')[0],
-      auditorName: 'Internal Quality Auditor',
       auditStatus: 'Connected to Google Drive',
       overallQualityIndex: 80,
       complianceRate: 100,
@@ -145,14 +148,14 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
       id: `course_${Date.now()}`,
       code: courseCode.trim().toUpperCase(),
       name: courseName.trim(),
-      lecturer: lecturer.trim() || 'Assigned Lecturer',
-      headOfDepartment: headOfDepartment.trim() || 'Prof. Ar. Dr. Norwina Mohd Nawawi',
+      lecturer: lecturer.trim() || 'Rizal bin Husin',
+      headOfDepartment: headOfDepartment.trim() || 'Anna Kamelia bt Kamaruddin',
+      auditorName: auditorName.trim() || 'Zairila Juria bt Zainal Abidin',
       program: 'Faculty of Architecture & Built Environment (FABE)',
       semester: semester,
       creditHours: 3,
       driveFolderUrl: driveUrl.trim() || '',
       auditDate: new Date().toISOString().split('T')[0],
-      auditorName: 'Internal Quality Auditor',
       auditStatus: 'Pending Verification',
       overallQualityIndex: 60,
       complianceRate: 0,
@@ -220,7 +223,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
               </label>
               <input
                 type="text"
-                placeholder="e.g. ARC 3126"
+                placeholder="e.g. ARCH 1111"
                 value={courseCode}
                 onChange={(e) => setCourseCode(e.target.value)}
                 style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
@@ -232,7 +235,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
               </label>
               <input
                 type="text"
-                placeholder="e.g. Architectural Design Studio III"
+                placeholder="e.g. Architecture Design Studio 1"
                 value={courseName}
                 onChange={(e) => setCourseName(e.target.value)}
                 style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
@@ -247,7 +250,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
               </label>
               <input
                 type="text"
-                placeholder="e.g. Ar. Rizal bin Husin"
+                placeholder="e.g. Rizal bin Husin"
                 value={lecturer}
                 onChange={(e) => setLecturer(e.target.value)}
                 style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
@@ -266,17 +269,31 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
             </div>
           </div>
 
-          <div>
-            <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.25rem' }}>
-              Head of Department (HOD) / Dean Name
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Prof. Ar. Dr. Norwina Mohd Nawawi"
-              value={headOfDepartment}
-              onChange={(e) => setHeadOfDepartment(e.target.value)}
-              style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
-            />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.25rem' }}>
+                Head of Department (HOD)
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Anna Kamelia bt Kamaruddin"
+                value={headOfDepartment}
+                onChange={(e) => setHeadOfDepartment(e.target.value)}
+                style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.25rem' }}>
+                Auditor
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Zairila Juria bt Zainal Abidin"
+                value={auditorName}
+                onChange={(e) => setAuditorName(e.target.value)}
+                style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
+              />
+            </div>
           </div>
 
           {/* Mode Switcher Tabs */}
