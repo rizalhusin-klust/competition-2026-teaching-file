@@ -12,7 +12,8 @@ import {
   Sparkles,
   GraduationCap,
   Sliders,
-  FileCode
+  FileCode,
+  PlusCircle
 } from 'lucide-react';
 import klustLogo from '../assets/klust-logo.jpg';
 
@@ -154,7 +155,7 @@ export default function Navbar({
           
           {/* Left: Course Selector + Dual-Role Switcher */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-            {/* Course Selector Dropdown */}
+            {/* Course Selector Dropdown + Add New Course Button */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
                 Course:
@@ -193,6 +194,28 @@ export default function Navbar({
                   color: 'var(--text-muted)'
                 }} />
               </div>
+
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={onOpenUpload}
+                style={{
+                  background: '#f0fdf4',
+                  borderColor: '#86efac',
+                  color: '#166534',
+                  fontWeight: 700,
+                  fontSize: '0.8rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0.4rem 0.75rem',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
+                }}
+                title="Add a new course portfolio to be audited/analyzed"
+              >
+                <PlusCircle size={15} style={{ color: '#16a34a' }} />
+                <span>+ Add New Course</span>
+              </button>
             </div>
 
             {/* DUAL PERSONA TOGGLE (Auditor vs Lecturer) */}

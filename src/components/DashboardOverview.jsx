@@ -23,7 +23,8 @@ import {
   Target,
   CheckSquare,
   Edit3,
-  Users
+  Users,
+  PlusCircle
 } from 'lucide-react';
 import { QUALITY_PILLARS, TEACHING_FILE_ITEMS } from '../data/auditRubrics';
 import { calculateAuditMetrics, generateExecutiveSummary } from '../services/auditEngine';
@@ -38,7 +39,8 @@ export default function DashboardOverview({
   onOpenEditCourse,
   onOpenAIReview,
   onOpenAISettings,
-  onOpenExportHtml
+  onOpenExportHtml,
+  onOpenUpload
 }) {
   if (!course) return null;
 
@@ -119,6 +121,24 @@ export default function DashboardOverview({
               <User size={14} />
               <span>Edit Details</span>
             </button>
+
+            {onOpenUpload && (
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={onOpenUpload}
+                style={{
+                  background: 'rgba(34,197,94,0.2)',
+                  color: '#ffffff',
+                  borderColor: 'rgba(74,222,128,0.4)',
+                  fontWeight: 700
+                }}
+                title="Add and analyze a new course portfolio"
+              >
+                <PlusCircle size={14} style={{ color: '#86efac' }} />
+                <span>+ Add New Course</span>
+              </button>
+            )}
 
             {course.driveFolderUrl && (
               <a

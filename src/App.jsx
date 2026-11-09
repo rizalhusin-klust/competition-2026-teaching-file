@@ -187,6 +187,7 @@ export default function App() {
             onOpenAIReview={handleOpenAIReview}
             onOpenAISettings={() => setIsAISettingsOpen(true)}
             onOpenExportHtml={() => setIsExportHtmlOpen(true)}
+            onOpenUpload={() => setIsUploadOpen(true)}
           />
         )}
 

@@ -8,9 +8,12 @@ import {
   Check, 
   AlertCircle,
   Sparkles,
-  Loader2
+  Loader2,
+  PlusCircle,
+  BookOpen
 } from 'lucide-react';
 import { processUploadedFiles, processZipFile } from '../services/folderParser';
+import { TEACHING_FILE_ITEMS } from '../data/auditRubrics';
 
 export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) {
   const [activeTab, setActiveTab] = useState('folder'); // 'folder' | 'zip' | 'drive'
@@ -115,6 +118,70 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
     onClose();
   };
 
+  const handleCreateBlankCourse = (e) => {
+    e.preventDefault();
+    if (!courseCode.trim() || !courseName.trim()) {
+      setError('Please provide at least a Course Code and Course Title.');
+      return;
+    }
+
+    setLoading(true);
+    // Initialize 13 audit folder entries
+    const initialFolderAudits = {};
+    for (const item of TEACHING_FILE_ITEMS) {
+      initialFolderAudits[item.id] = {
+        submitted: false,
+        fileCount: 0,
+        files: [],
+        qualityScore: 3,
+        qualityTier: 'Satisfactory',
+        findings: ['Portfolio item registered for audit tracking.'],
+        risks: [],
+        auditorNotes: 'Awaiting syllabus and document upload.'
+      };
+    }
+
+    const newCourse = {
+      id: `course_${Date.now()}`,
+      code: courseCode.trim().toUpperCase(),
+      name: courseName.trim(),
+      lecturer: lecturer.trim() || 'Assigned Lecturer',
+      headOfDepartment: headOfDepartment.trim() || 'Prof. Ar. Dr. Norwina Mohd Nawawi',
+      program: 'Faculty of Architecture & Built Environment (FABE)',
+      semester: semester,
+      creditHours: 3,
+      driveFolderUrl: driveUrl.trim() || '',
+      auditDate: new Date().toISOString().split('T')[0],
+      auditorName: 'Internal Quality Auditor',
+      auditStatus: 'Pending Verification',
+      overallQualityIndex: 60,
+      complianceRate: 0,
+      folderAudits: initialFolderAudits,
+      clos: [
+        {
+          id: 'clo1',
+          code: 'CLO 1',
+          description: 'Explain foundational course theoretical principles and statutory codes.',
+          ploCode: 'PLO 1 (Knowledge)',
+          domain: 'Cognitive',
+          bloomLevel: 'C2 (Understanding)',
+          targetAttainmentPct: 75,
+          actualAttainmentPct: 75,
+          status: 'Achieved'
+        }
+      ],
+      assessments: [
+        { id: 'ass1', name: 'Continuous Assessment 1', weight: 40, cloId: 'clo1', type: 'Coursework', maxMarks: 100 },
+        { id: 'ass2', name: 'Final Assessment', weight: 60, cloId: 'clo1', type: 'Final Exam / Portfolio', maxMarks: 100 }
+      ],
+      correctiveActions: []
+    };
+
+    onCourseCreated(newCourse);
+    setLoading(false);
+    onClose();
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal-content fade-in" style={{ maxWidth: '640px' }}>
@@ -123,11 +190,11 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
         <div className="modal-header">
           <div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <FolderUp size={22} style={{ color: 'var(--primary)' }} />
-              Upload Teaching File Portfolio
+              <PlusCircle size={22} style={{ color: 'var(--primary)' }} />
+              Add Course to be Analyzed
             </h3>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Internal audit quality analysis will be triggered automatically.
+              Create a new course audit by uploading a folder, ZIP, Google Drive, or creating a new course entry.
             </p>
           </div>
           <button type="button" onClick={onClose} className="btn-ghost" style={{ padding: '0.35rem' }}>
@@ -213,7 +280,7 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
           </div>
 
           {/* Mode Switcher Tabs */}
-          <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem', flexWrap: 'wrap' }}>
             <button
               type="button"
               className={`btn btn-sm ${activeTab === 'folder' ? 'btn-primary' : 'btn-secondary'}`}
@@ -234,6 +301,13 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
               onClick={() => setActiveTab('drive')}
             >
               <Cloud size={14} /> Connect Google Drive
+            </button>
+            <button
+              type="button"
+              className={`btn btn-sm ${activeTab === 'manual' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setActiveTab('manual')}
+            >
+              <PlusCircle size={14} /> New Course Entry
             </button>
           </div>
 
@@ -333,6 +407,32 @@ export default function UploadFolderModal({ isOpen, onClose, onCourseCreated }) 
                 </button>
               </div>
             </form>
+          )}
+
+          {/* Tab 4: Manual Course Entry */}
+          {activeTab === 'manual' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: '#f8fafc', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid #cbd5e1' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e3a8a', fontWeight: 800, fontSize: '0.92rem' }}>
+                <PlusCircle size={18} style={{ color: '#2563eb' }} />
+                <span>Create New Course Audit Entry</span>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>
+                Initializes all 13 accreditation folders (Course Outline, Assessment Matrix, CQI, Moderation, etc.) ready for immediate audit evaluation, document attachment, and AI review.
+              </p>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleCreateBlankCourse}
+                  disabled={loading}
+                  style={{ gap: '0.45rem', fontWeight: 700 }}
+                >
+                  {loading ? <Loader2 size={16} className="spin" /> : <PlusCircle size={16} />}
+                  <span>Initialize & Analyze Course</span>
+                </button>
+              </div>
+            </div>
           )}
 
         </div>
