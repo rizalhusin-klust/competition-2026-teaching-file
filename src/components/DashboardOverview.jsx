@@ -19,7 +19,11 @@ import {
   Sparkles,
   Building,
   GraduationCap,
-  FileCode
+  FileCode,
+  Target,
+  CheckSquare,
+  Edit3,
+  Users
 } from 'lucide-react';
 import { QUALITY_PILLARS, TEACHING_FILE_ITEMS } from '../data/auditRubrics';
 import { calculateAuditMetrics, generateExecutiveSummary } from '../services/auditEngine';
@@ -489,32 +493,52 @@ export default function DashboardOverview({
             const isGood = score >= 75;
             const isWarning = score >= 55 && score < 75;
 
+            // Render suitable icon for each of the 6 pillars
+            const renderPillarIcon = (id, size = 18) => {
+              switch (id) {
+                case 'alignment': return <Target size={size} />;
+                case 'assessment': return <CheckSquare size={size} />;
+                case 'marking': return <Edit3 size={size} />;
+                case 'cqi': return <TrendingUp size={size} />;
+                case 'curriculum': return <BookOpen size={size} />;
+                case 'governance': return <Users size={size} />;
+                default: return <Award size={size} />;
+              }
+            };
+
             return (
               <div key={pillar.id} className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                       <div style={{
-                        width: '34px',
-                        height: '34px',
-                        borderRadius: '8px',
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '10px',
                         background: `${pillar.color}15`,
                         color: pillar.color,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontWeight: 800,
-                        fontSize: '0.85rem'
-                      }}>
-                        {pillar.code}
+                        flexShrink: 0,
+                        border: `1px solid ${pillar.color}30`
+                      }}
+                      title={`${pillar.code} - ${pillar.name}`}
+                      >
+                        {renderPillarIcon(pillar.id, 20)}
                       </div>
                       <div>
-                        <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: 800, color: pillar.color, background: `${pillar.color}12`, padding: '0.1rem 0.35rem', borderRadius: '4px' }}>
+                            {pillar.code}
+                          </span>
+                          <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                            Weight: {pillar.weight}%
+                          </span>
+                        </div>
+                        <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: 'var(--text-main)', marginTop: '0.2rem' }}>
                           {pillar.name}
                         </h3>
-                        <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
-                          Weight: {pillar.weight}% of Total Audit
-                        </span>
                       </div>
                     </div>
 

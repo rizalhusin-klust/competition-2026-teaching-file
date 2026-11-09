@@ -469,11 +469,27 @@ export function generateStandaloneHtmlContent(course, role = 'auditor', logoData
           const score = metrics.pillarScores[p.id] || 3.0;
           const tier = score >= 4.5 ? 'Exemplary' : score >= 3.8 ? 'Commendable' : score >= 3.0 ? 'Satisfactory' : 'Needs Remediation';
           const tierColor = score >= 4.5 ? '#059669' : score >= 3.8 ? '#1e40af' : score >= 3.0 ? '#d97706' : '#dc2626';
+          
+          const pillarGlyph = {
+            alignment: '🎯',
+            assessment: '📋',
+            marking: '✍️',
+            cqi: '📈',
+            curriculum: '📚',
+            governance: '👥'
+          }[p.id] || '🏅';
+
           return `
           <tr>
             <td>
-              <strong>${p.name}</strong><br>
-              <span style="font-size: 0.76rem; color: var(--text-muted);">${p.description}</span>
+              <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                <span style="font-size: 1.1rem; line-height: 1;">${pillarGlyph}</span>
+                <div>
+                  <span class="badge" style="background: ${p.color}15; color: ${p.color}; font-size: 0.68rem; margin-bottom: 0.2rem;">${p.code}</span>
+                  <strong>${p.name}</strong><br>
+                  <span style="font-size: 0.76rem; color: var(--text-muted);">${p.description}</span>
+                </div>
+              </div>
             </td>
             <td><strong>${p.weight}%</strong></td>
             <td><strong style="color: ${tierColor};">${score.toFixed(1)} / 5.0</strong></td>

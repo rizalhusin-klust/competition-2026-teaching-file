@@ -11,7 +11,13 @@ import {
   Calendar,
   User,
   Building,
-  FileCode
+  FileCode,
+  Target,
+  CheckSquare,
+  Edit3,
+  TrendingUp,
+  BookOpen,
+  Users
 } from 'lucide-react';
 import { TEACHING_FILE_ITEMS, QUALITY_PILLARS } from '../data/auditRubrics';
 import { calculateAuditMetrics, generateExecutiveSummary } from '../services/auditEngine';
@@ -194,10 +200,28 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
               <tbody>
                 {QUALITY_PILLARS.map(p => {
                   const score = metrics.pillarScores[p.id] || 0;
+                  
+                  const renderIcon = (id) => {
+                    switch (id) {
+                      case 'alignment': return <Target size={14} style={{ color: p.color }} />;
+                      case 'assessment': return <CheckSquare size={14} style={{ color: p.color }} />;
+                      case 'marking': return <Edit3 size={14} style={{ color: p.color }} />;
+                      case 'cqi': return <TrendingUp size={14} style={{ color: p.color }} />;
+                      case 'curriculum': return <BookOpen size={14} style={{ color: p.color }} />;
+                      case 'governance': return <Users size={14} style={{ color: p.color }} />;
+                      default: return <Award size={14} style={{ color: p.color }} />;
+                    }
+                  };
+
                   return (
                     <tr key={p.id} style={{ borderBottom: '1px solid var(--border)' }}>
                       <td style={{ padding: '0.65rem 0.75rem', fontWeight: 700, color: 'var(--primary)' }}>{p.code}</td>
-                      <td style={{ padding: '0.65rem 0.75rem', fontWeight: 600 }}>{p.name}</td>
+                      <td style={{ padding: '0.65rem 0.75rem', fontWeight: 600 }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}>
+                          {renderIcon(p.id)}
+                          <span>{p.name}</span>
+                        </div>
+                      </td>
                       <td style={{ padding: '0.65rem 0.75rem' }}>{p.weight}%</td>
                       <td style={{ padding: '0.65rem 0.75rem', fontWeight: 800, color: p.color }}>{score}%</td>
                       <td style={{ padding: '0.65rem 0.75rem' }}>
