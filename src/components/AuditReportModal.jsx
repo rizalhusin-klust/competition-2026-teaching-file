@@ -267,6 +267,24 @@ export default function AuditReportModal({ isOpen, onClose, course, userRole = '
                   );
                 }
 
+                if ((item.id === '13' || item.isOptional) && (!audit.submitted || !audit.fileCount)) {
+                  return (
+                    <div key={item.id} style={{ border: '1px solid #e2e8f0', borderRadius: 'var(--radius-sm)', padding: '0.75rem 1rem', background: '#f8fafc' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#475569' }}>
+                          {item.code}: {item.title}
+                        </div>
+                        <span className="badge" style={{ fontSize: '0.72rem', fontWeight: 700, background: '#e2e8f0', color: '#475569' }}>
+                          Optional • Nil Incident Records
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '0.25rem' }}>
+                        <em>Miscellaneous records are non-mandatory (filed as-needed for MCs, deferments, or special approvals). No penalty applied.</em>
+                      </div>
+                    </div>
+                  );
+                }
+
                 return (
                   <div key={item.id} style={{ border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.75rem 1rem', background: '#ffffff' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>

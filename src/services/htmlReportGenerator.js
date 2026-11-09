@@ -538,6 +538,29 @@ export function generateStandaloneHtmlContent(course, role = 'auditor', logoData
           </div>`;
         }
 
+        if ((item.id === '13' || item.isOptional) && (!submitted || !audit.fileCount)) {
+          return `
+          <div class="folder-item" style="background: #f8fafc; border-color: #cbd5e1;">
+            <div class="folder-header">
+              <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                  <span class="badge badge-primary">${item.code}</span>
+                  <span class="badge" style="background: #e2e8f0; color: #475569;">Optional • Not Mandatory</span>
+                </div>
+                <div class="folder-title" style="color: #475569;">${item.title}</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="badge" style="background: #e2e8f0; color: #475569; font-size: 0.85rem; padding: 0.25rem 0.65rem;">
+                  Nil Special Cases
+                </span>
+              </div>
+            </div>
+            <div style="font-size: 0.84rem; color: #64748b; margin-top: 0.5rem; font-style: italic;">
+              Miscellaneous records are non-mandatory and filed as-needed (e.g. for student medical certificates, deferments, or special approvals). No compliance penalty is incurred when left empty.
+            </div>
+          </div>`;
+        }
+
         return `
         <div class="folder-item">
           <div class="folder-header">

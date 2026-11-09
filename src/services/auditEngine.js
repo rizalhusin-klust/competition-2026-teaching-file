@@ -36,6 +36,8 @@ export function calculateAuditMetrics(course) {
 
   const is100PercentCoursework = Boolean(course.isCourseworkOnly || course.is100PercentCoursework);
 
+  let applicableMandatoryCount = 0;
+
   for (const item of TEACHING_FILE_ITEMS) {
     // If 100% coursework, exam folders 09 and 10 are not applicable
     const isExamFolder = item.id === '09' || item.id === '10';
@@ -43,12 +45,26 @@ export function calculateAuditMetrics(course) {
       continue;
     }
 
+    const isOptionalFolder = item.isOptional || item.id === '13';
     const audit = folderAudits[item.id] || { submitted: false, qualityScore: 1, risks: [] };
-    if (audit.submitted && audit.fileCount > 0) {
+    const hasFiles = Boolean(audit.submitted && audit.fileCount > 0);
+
+    if (hasFiles) {
       submittedCount++;
     }
 
-    const score = audit.qualityScore || 1; // 1-5 scale
+    // Only count mandatory folders towards required baseline count
+    if (!isOptionalFolder) {
+      applicableMandatoryCount++;
+    }
+
+    // For optional folders with no files, do not drag down quality score
+    let score = audit.qualityScore || 1;
+    if (isOptionalFolder && !hasFiles) {
+      // Optional folder left empty: clean pass with no penalty
+      score = 4;
+    }
+
     totalScoreSum += score;
 
     if (audit.risks && audit.risks.length > 0) {
@@ -87,14 +103,15 @@ export function calculateAuditMetrics(course) {
     totalWeightSum += pillar.weight;
   }
 
-  const applicableFolderCount = is100PercentCoursework ? (TEACHING_FILE_ITEMS.length - 2) : TEACHING_FILE_ITEMS.length;
+  // Compliance is based on mandatory folders fulfilled (optional folder 13 does not penalize if empty)
+  const complianceRate = Math.min(100, Math.round((submittedCount / (applicableMandatoryCount || 1)) * 100));
   const overallQualityIndex = Math.round(weightedIndexSum / (totalWeightSum || 100));
-  const complianceRate = Math.round((submittedCount / (applicableFolderCount || 1)) * 100);
 
   // Determine Quality Tier
   const tier = QUALITY_TIERS.find(t => overallQualityIndex >= t.minScore) || QUALITY_TIERS[QUALITY_TIERS.length - 1];
 
   const activeCarsCount = (course.correctiveActions || []).filter(c => c.status !== 'Closed').length;
+  const applicableFolderCount = is100PercentCoursework ? 12 : 14;
   const avgQualityScore = Number((totalScoreSum / (applicableFolderCount || 12)).toFixed(1));
 
   return {
@@ -106,6 +123,7 @@ export function calculateAuditMetrics(course) {
     submittedFolderCount: submittedCount,
     submittedFolders: submittedCount,
     totalFolderCount: applicableFolderCount,
+    mandatoryFolderCount: applicableMandatoryCount,
     criticalRisksCount,
     totalRisks: criticalRisksCount,
     activeCarsCount,

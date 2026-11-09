@@ -367,16 +367,17 @@ export const TEACHING_FILE_ITEMS = [
     title: 'Miscellaneous Records',
     driveFolderName: '13 MISCELLANEOUS RECORDS',
     pillarId: 'governance',
+    isOptional: true, // Not mandatory - only filed if special student records/cases occurred
     essentialKeywords: ['miscellaneous', 'miscellaneous records', 'mc', 'medical certificate', 'deferment', 'correspondence', '13'],
     complianceCriteria: [
-      'Records of student special approvals, medical certificates (MC), deferments, or academic correspondence.',
-      'If no special incidents occurred during the semester, a brief "Nil Records" confirmation is filed.'
+      'Optional / As-needed records: Medical certificates (MC), student deferment letters, special makeups, or faculty correspondence.',
+      'Note: This folder is NOT mandatory. If no special incidents occurred during the semester, it can be left empty without any compliance penalty.'
     ],
     qualityAuditCriteria: [
       {
-        criterion: 'Procedural Fairness & Academic Governance',
-        description: 'Equitable administration of student makeup requests and regulatory compliance.',
-        benchmark: 'Documented transparency for any special student arrangements.'
+        criterion: 'Procedural Fairness & Academic Governance (Optional)',
+        description: 'Equitable administration of student makeup requests and regulatory compliance when special incidents arise.',
+        benchmark: 'Accurate record keeping if special incidents exist; otherwise fully compliant as Nil records.'
       }
     ]
   }

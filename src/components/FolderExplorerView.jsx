@@ -363,6 +363,8 @@ export default function FolderExplorerView({
                     <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
                       {is100Coursework && isExamFolder ? (
                         <span style={{ color: '#059669', fontWeight: 700 }}>N/A • 100% Coursework</span>
+                      ) : (item.id === '13' || item.isOptional) ? (
+                        <span style={{ color: '#64748b' }}>{folderAudit.fileCount > 0 ? `${folderAudit.fileCount} file(s)` : 'Optional (As Needed)'}</span>
                       ) : (
                         `${folderAudit.fileCount || 0} file(s)`
                       )}
@@ -373,6 +375,10 @@ export default function FolderExplorerView({
                 {is100Coursework && isExamFolder ? (
                   <span className="badge badge-success" style={{ fontSize: '0.66rem', padding: '0.12rem 0.35rem' }}>
                     Exempt
+                  </span>
+                ) : (item.id === '13' || item.isOptional) && !folderAudit.fileCount ? (
+                  <span className="badge" style={{ fontSize: '0.66rem', padding: '0.12rem 0.35rem', background: '#f1f5f9', color: '#64748b' }}>
+                    Optional
                   </span>
                 ) : (
                   <span className={`badge ${score >= 4 ? 'badge-success' : (score === 3 ? 'badge-warning' : 'badge-danger')}`} style={{ fontSize: '0.7rem', padding: '0.15rem 0.45rem' }}>
@@ -405,6 +411,10 @@ export default function FolderExplorerView({
                   <span className="badge badge-success" style={{ fontWeight: 800 }}>
                     Exempted: 100% Coursework Subject
                   </span>
+                ) : (activeItem.id === '13' || activeItem.isOptional) ? (
+                  <span className="badge" style={{ background: '#f1f5f9', color: '#475569', border: '1px solid #cbd5e1', fontWeight: 700 }}>
+                    {audit.submitted ? 'Optional Records Uploaded' : 'Optional (Not Mandatory)'}
+                  </span>
                 ) : (
                   <span className={`badge ${audit.submitted ? 'badge-success' : 'badge-danger'}`}>
                     {audit.submitted ? 'Folder Submitted' : 'Missing Submission'}
@@ -419,6 +429,26 @@ export default function FolderExplorerView({
                 Google Drive Directory: <code className="mono">{activeItem.driveFolderName}</code>
               </p>
               
+              {(activeItem.id === '13' || activeItem.isOptional) && (
+                <div style={{
+                  marginTop: '0.75rem',
+                  padding: '0.65rem 0.85rem',
+                  background: '#f8fafc',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: 'var(--radius-sm)',
+                  fontSize: '0.82rem',
+                  color: '#334155',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}>
+                  <Info size={16} style={{ color: '#64748b', flexShrink: 0 }} />
+                  <span>
+                    <strong>Non-Mandatory Folder:</strong> 13 Miscellaneous Records is an as-needed folder for special cases (e.g. medical certificates, deferment letters, special makeup approval memos). If no special incidents occurred during the semester, it can be left empty without any compliance penalty.
+                  </span>
+                </div>
+              )}
+
               {Boolean(course.isCourseworkOnly || course.is100PercentCoursework) && (activeItem.id === '09' || activeItem.id === '10') && (
                 <div style={{
                   marginTop: '0.75rem',
